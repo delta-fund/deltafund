@@ -1,0 +1,345 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>DeltaCoin Ecosystem - Real-time Active Mining</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+</head>
+<body class="bg-slate-950 text-white min-h-screen flex flex-col items-center justify-center p-4">
+    <div class="bg-slate-900 p-6 md:p-8 rounded-3xl shadow-2xl max-w-xl w-full border border-slate-800 space-y-6">
+        
+        <!-- Header -->
+        <div class="text-center">
+            <h1 class="text-3xl font-bold text-cyan-400 tracking-wide">DeltaCoin DApp</h1>
+            <p class="text-slate-400 text-xs mt-1">Real-time Active Mining (15 Mins Daily Target) | 8 USD = 10 DELTA</p>
+        </div>
+        
+        <!-- Connect Wallet Button -->
+        <button id="connectBtn" onclick="connectWallet()" class="w-full bg-cyan-500 hover:bg-cyan-400 text-slate-950 font-bold py-3 px-6 rounded-2xl transition duration-200 shadow-lg text-sm">
+            Connect MetaMask Wallet
+        </button>
+        
+        <!-- Wallet Info Section -->
+        <div id="walletInfo" class="hidden text-left bg-slate-950 p-4 rounded-2xl border border-slate-800 space-y-3 shadow-inner">
+            <div class="flex justify-between items-center">
+                <span class="text-[11px] text-slate-400 uppercase tracking-wider font-semibold">Account:</span>
+                <span id="accountAddress" class="font-mono text-xs text-cyan-300"></span>
+            </div>
+            <div class="flex justify-between items-center pt-2 border-t border-slate-900">
+                <span class="text-xs text-slate-400 font-medium">DeltaCoin Balance:</span>
+                <span id="tokenBalance" class="font-extrabold text-green-400 text-base">0.00 DELTA</span>
+            </div>
+        </div>
+
+        <!-- Buy DeltaCoin Section -->
+        <div class="bg-gradient-to-r from-slate-950 to-indigo-950 p-5 rounded-2xl border border-indigo-900/50 text-left shadow">
+            <h2 class="text-sm font-bold text-indigo-300 mb-1 flex items-center gap-2">
+                <span>🛒</span> Buy DeltaCoin (8 USD = 10 DELTA)
+            </h2>
+            <p class="text-xs text-slate-400 mb-3">Pay securely via MetaMask Smart Contract.</p>
+            <div class="flex gap-2">
+                <input type="number" id="usdAmount" placeholder="Enter USD (e.g. 8)" class="bg-slate-900 text-xs text-slate-200 px-3 py-2.5 rounded-xl w-full border border-slate-800 focus:outline-none">
+                <button onclick="payViaMetaMask()" class="bg-indigo-600 hover:bg-indigo-500 text-white font-bold text-xs py-2.5 px-4 rounded-xl transition whitespace-nowrap shadow">Pay & Buy</button>
+            </div>
+        </div>
+
+        <!-- Real-time Active Mining Section -->
+        <div class="bg-slate-950 p-5 rounded-2xl border border-slate-800 text-left relative overflow-hidden shadow-md">
+            <div class="flex justify-between items-center mb-2">
+                <h2 class="text-sm font-bold text-amber-400 flex items-center gap-2">
+                    <span>⛏️</span> Real Active Mining (Target: 300 Mins/Month)
+                </h2>
+                <span id="miningStatus" class="text-[10px] bg-slate-800 text-slate-300 px-2 py-0.5 rounded-full font-semibold">Paused</span>
+            </div>
+            <p class="text-xs text-slate-400 mb-3">Website par active rehna hoga. Jab tak app khuli rahegi, timer real-time count karega (Daily 15 Mins mandatory).</p>
+            
+            <div class="space-y-3 bg-slate-900/60 p-3 rounded-xl border border-slate-900 mb-3">
+                <div class="flex justify-between text-xs">
+                    <span class="text-slate-400">Monthly Active Time:</span>
+                    <span id="usageTimeText" class="font-bold text-amber-300">0 / 300 Mins</span>
+                </div>
+                <div class="w-full bg-slate-950 rounded-full h-2">
+                    <div id="timeProgressBar" class="bg-amber-500 h-2 rounded-full transition-all duration-300" style="width: 0%"></div>
+                </div>
+                <div class="flex justify-between text-[11px] text-slate-400 pt-1">
+                    <span>Today's Active Timer: <strong id="todayTimer" class="text-cyan-300">0s / 900s (15 mins)</strong></span>
+                    <span id="todayStatus" class="text-amber-400 font-semibold">Not Completed Today</span>
+                </div>
+            </div>
+
+            <button onclick="toggleRealMining()" id="miningToggleBtn" class="w-full bg-amber-500 hover:bg-amber-400 text-slate-950 font-bold text-xs py-2.5 rounded-xl transition shadow">
+                Start Real Active Mining Session
+            </button>
+        </div>
+
+        <!-- Tier System Section -->
+        <div class="bg-slate-950 p-5 rounded-2xl border border-slate-800 text-left">
+            <div class="flex justify-between items-center mb-2">
+                <h2 class="text-sm font-bold text-purple-400 flex items-center gap-2">
+                    <span>🏆</span> Wallet Tier Upgrade System
+                </h2>
+                <span id="walletTierBadge" class="text-[10px] bg-purple-950 text-purple-300 border border-purple-800 px-2.5 py-0.5 rounded-full font-bold">Bronze Tier</span>
+            </div>
+            <p class="text-xs text-slate-400 mb-3">Requirement: Minimum 15 Referrals required to unlock Silver/Gold/Diamond tiers.</p>
+            <div class="flex justify-between items-center bg-slate-900/60 p-3 rounded-xl border border-slate-800 text-xs">
+                <span class="text-slate-400">Current Tier Status:</span>
+                <span id="tierBenefits" class="font-bold text-green-400">1.0x Multiplier (Needs 15+ Refs)</span>
+            </div>
+        </div>
+
+        <!-- Refer and Earn Section -->
+        <div class="bg-slate-950 p-5 rounded-2xl border border-slate-800 text-left">
+            <h2 class="text-sm font-bold text-cyan-300 mb-1 flex items-center gap-2">
+                <span>🎁</span> Refer & Earn
+            </h2>
+            <p class="text-xs text-slate-400 mb-3">Share your referral link to reach the 15 referral tier milestone.</p>
+            
+            <div class="flex items-center space-x-2 mb-3">
+                <input type="text" id="referralLink" readonly class="bg-slate-900 text-xs text-slate-300 px-3 py-2.5 rounded-xl w-full border border-slate-800 focus:outline-none font-mono" value="Connect wallet first">
+                <button onclick="copyReferralLink()" class="bg-cyan-600 hover:bg-cyan-500 text-slate-950 font-bold text-xs py-2.5 px-4 rounded-xl transition whitespace-nowrap shadow">Copy</button>
+            </div>
+            
+            <div class="grid grid-cols-2 gap-3 pt-2 border-t border-slate-900 text-center">
+                <div class="bg-slate-900/60 p-2.5 rounded-xl border border-slate-800">
+                    <p class="text-[10px] text-slate-400 font-medium">Total Referrals</p>
+                    <p id="refCount" class="text-sm font-bold text-cyan-400">0</p>
+                </div>
+                <div class="bg-slate-900/60 p-2.5 rounded-xl border border-slate-800">
+                    <p class="text-[10px] text-slate-400 font-medium">Referral Tier Bonuses</p>
+                    <p id="refEarnings" class="text-sm font-bold text-green-400">0.00 DELTA</p>
+                </div>
+            </div>
+            <p id="copyMsg" class="text-[11px] text-green-400 mt-2 text-center h-4 font-medium"></p>
+        </div>
+    </div>
+
+    <script>
+        let connectedAccount = "";
+        let userData = {
+            balance: 0.00,
+            minutesUsed: 0, 
+            referrals: 0,   
+            tier: "Bronze",
+            lastActiveDate: "",
+            todaySeconds: 0 // Tracks real seconds active today (Target: 900s = 15 mins)
+        };
+
+        let activeTimer = null;
+        let isMiningActive = false;
+
+        window.onload = function() {
+            const savedData = localStorage.getItem('delta_user_profile');
+            if (savedData) {
+                userData = JSON.parse(savedData);
+                connectedAccount = localStorage.getItem('delta_connected_wallet') || "";
+                
+                // Check if date changed to reset today's seconds
+                const todayStr = new Date().toDateString();
+                if (userData.lastActiveDate !== todayStr) {
+                    userData.todaySeconds = 0;
+                    userData.lastActiveDate = todayStr;
+                    saveData();
+                }
+
+                if(connectedAccount) {
+                    updateUIAfterConnection(connectedAccount);
+                }
+            }
+        }
+
+        function saveData() {
+            localStorage.setItem('delta_user_profile', JSON.stringify(userData));
+            localStorage.setItem('delta_connected_wallet', connectedAccount);
+        }
+
+        async function connectWallet() {
+            if (typeof window.ethereum !== 'undefined') {
+                try {
+                    const accounts = await window.ethereum.request({ method: 'eth_requestAccounts' });
+                    connectedAccount = accounts[0];
+                    userData.lastActiveDate = new Date().toDateString();
+                    saveData();
+                    updateUIAfterConnection(connectedAccount);
+                } catch (error) {
+                    console.error("User rejected connection", error);
+                }
+            } else {
+                alert('Please install MetaMask extension!');
+            }
+        }
+
+        function updateUIAfterConnection(account) {
+            const btn = document.getElementById('connectBtn');
+            btn.innerText = 'Wallet Connected';
+            btn.classList.remove('bg-cyan-500', 'hover:bg-cyan-400', 'text-slate-950');
+            btn.classList.add('bg-green-600', 'text-white');
+            
+            document.getElementById('walletInfo').classList.remove('hidden');
+            document.getElementById('accountAddress').innerText = account.substring(0, 6) + "..." + account.substring(38);
+            
+            const cleanUrl = window.location.origin + window.location.pathname;
+            document.getElementById('referralLink').value = `${cleanUrl}?ref=${account}`;
+            
+            refreshUIStats();
+        }
+
+        function refreshUIStats() {
+            document.getElementById('tokenBalance').innerText = userData.balance.toFixed(2) + " DELTA";
+            document.getElementById('refCount').innerText = userData.referrals;
+            
+            let percent = (userData.minutesUsed / 300) * 100;
+            if(percent > 100) percent = 100;
+            document.getElementById('usageTimeText').innerText = `${userData.minutesUsed} / 300 Mins`;
+            document.getElementById('timeProgressBar').style.width = `${percent}%`;
+
+            // Today timer display (900 seconds = 15 mins)
+            let secs = userData.todaySeconds;
+            let minsDisplay = Math.floor(secs / 60);
+            let remSecs = secs % 60;
+            document.getElementById('todayTimer').innerText = `${minsDisplay}m ${remSecs}s / 15m`;
+
+            if(userData.todaySeconds >= 900) {
+                document.getElementById('todayStatus').innerText = "Completed Today ✓";
+                document.getElementById('todayStatus').classList.remove('text-amber-400');
+                document.getElementById('todayStatus').classList.add('text-green-400');
+            }
+
+            evaluateTier();
+        }
+
+        function evaluateTier() {
+            let tier = "Bronze Tier";
+            let benefits = "1.0x Multiplier (Needs 15 Refs)";
+            
+            if(userData.referrals >= 15 && userData.referrals < 30) {
+                tier = "Silver Tier 🥈";
+                benefits = "1.5x Multiplier Unlocked!";
+            } else if(userData.referrals >= 30 && userData.referrals < 50) {
+                tier = "Gold Tier 🥇";
+                benefits = "2.0x Multiplier Unlocked!";
+            } else if(userData.referrals >= 50) {
+                tier = "Diamond Tier 💎";
+                benefits = "3.0x Multiplier & VIP Status!";
+            }
+
+            userData.tier = tier;
+            document.getElementById('walletTierBadge').innerText = tier;
+            document.getElementById('tierBenefits').innerText = benefits;
+        }
+
+        // REAL ACTIVE MINING TOGGLE (Counts actual seconds user keeps app open & active)
+        function toggleRealMining() {
+            if(!connectedAccount) {
+                alert('Pehle wallet connect karein!');
+                return;
+            }
+
+            isMiningActive = !isMiningActive;
+            const btn = document.getElementById('miningToggleBtn');
+            const status = document.getElementById('miningStatus');
+
+            if(isMiningActive) {
+                btn.innerText = 'Pause Mining Session';
+                btn.classList.remove('bg-amber-500', 'hover:bg-amber-400');
+                btn.classList.add('bg-rose-600', 'hover:bg-rose-500', 'text-white');
+                status.innerText = 'Active (Counting Real Time)';
+                status.classList.remove('bg-slate-800', 'text-slate-300');
+                status.classList.add('bg-green-950', 'text-green-400');
+
+                // Start real-time active timer (1 tick per second)
+                activeTimer = setInterval(() => {
+                    // Check if user already completed 300 mins for the month
+                    if(userData.minutesUsed >= 300) {
+                        alert('Poore mahine ka 300 minutes ka target complete ho chuka hai!');
+                        stopMining();
+                        return;
+                    }
+
+                    userData.todaySeconds += 1;
+
+                    // If 15 mins (900 seconds) completed for today
+                    if(userData.todaySeconds === 900) {
+                        userData.minutesUsed += 15; // Add 15 mins to monthly total
+                        if(userData.minutesUsed >= 300) {
+                            userData.minutesUsed = 300;
+                            userData.balance += 5.00; // Unlock 5 DELTA monthly reward
+                            alert('Badhai ho! Poore mahine ka 300 minutes active time complete hone par 5 DELTA reward wallet mein mil gaya hai!');
+                        } else {
+                            alert('Aaj ka 15 minutes active time complete ho gaya! Monthly total updated.');
+                        }
+                    }
+
+                    saveData();
+                    refreshUIStats();
+                }, 1000);
+
+            } else {
+                stopMining();
+            }
+        }
+
+        function stopMining() {
+            isMiningActive = false;
+            clearInterval(activeTimer);
+            const btn = document.getElementById('miningToggleBtn');
+            const status = document.getElementById('miningStatus');
+            btn.innerText = 'Start Real Active Mining Session';
+            btn.classList.remove('bg-rose-600', 'hover:bg-rose-500', 'text-white');
+            btn.classList.add('bg-amber-500', 'hover:bg-amber-400', 'text-slate-950');
+            status.innerText = 'Paused';
+            status.classList.remove('bg-green-950', 'text-green-400');
+            status.classList.add('bg-slate-800', 'text-slate-300');
+        }
+
+        async function payViaMetaMask() {
+            if(!connectedAccount) {
+                alert('Pehle wallet connect karein!');
+                return;
+            }
+            const usd = parseFloat(document.getElementById('usdAmount').value);
+            if(isNaN(usd) || usd <= 0) {
+                alert('Valid USD amount daalein!');
+                return;
+            }
+
+            try {
+                const transactionParameters = {
+                    to: '0x0000000000000000000000000000000000000001',
+                    from: connectedAccount,
+                    value: '0x0',
+                };
+
+                alert(`MetaMask payment popup open hoga for $${usd}.`);
+                const txHash = await window.ethereum.request({
+                    method: 'eth_sendTransaction',
+                    params: [transactionParameters],
+                });
+
+                const deltaReceived = (usd / 8) * 10;
+                userData.balance += deltaReceived;
+                saveData();
+                refreshUIStats();
+                alert(`Payment Successful! Added ${deltaReceived.toFixed(2)} DELTA`);
+
+            } catch (error) {
+                console.error("Payment failed", error);
+                alert('Payment cancel ho gayi.');
+            }
+        }
+
+        function copyReferralLink() {
+            const refInput = document.getElementById('referralLink');
+            if(!connectedAccount) {
+                alert('Pehle wallet connect karein!');
+                return;
+            }
+            refInput.select();
+            navigator.clipboard.writeText(refInput.value);
+            const msg = document.getElementById('copyMsg');
+            msg.innerText = '✓ Link copied successfully!';
+            setTimeout(() => { msg.innerText = ''; }, 3000);
+        }
+    </script>
+</body>
+</html>
