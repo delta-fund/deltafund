@@ -1,0 +1,137 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>DeltaCoin Portal & Referral System</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+</head>
+<body class="bg-slate-900 text-white min-h-screen flex flex-col items-center justify-center p-4">
+    <div class="bg-slate-800 p-8 rounded-2xl shadow-2xl max-w-lg w-full border border-slate-700">
+        
+        <!-- Header -->
+        <div class="text-center mb-6">
+            <h1 class="text-3xl font-bold text-cyan-400">DeltaCoin DApp</h1>
+            <p class="text-slate-400 text-sm mt-1">Decentralized Fund & Referral Program</p>
+        </div>
+        
+        <!-- Connect Wallet Button -->
+        <button id="connectBtn" onclick="connectWallet()" class="w-full bg-cyan-500 hover:bg-cyan-600 text-slate-950 font-bold py-3 px-6 rounded-xl transition duration-200 shadow-lg mb-4">
+            Connect MetaMask Wallet
+        </button>
+        
+        <!-- Wallet Info Section -->
+        <div id="walletInfo" class="hidden text-left bg-slate-900 p-4 rounded-xl border border-slate-800 space-y-2 mb-6">
+            <p class="text-xs text-slate-400 uppercase tracking-wider">Connected Account:</p>
+            <p id="accountAddress" class="font-mono text-xs text-cyan-300 break-all"></p>
+            <div class="flex justify-between items-center pt-2 border-t border-slate-800">
+                <span class="text-xs text-slate-400">DeltaCoin Balance:</span>
+                <span id="tokenBalance" class="font-bold text-green-400 text-sm">0.00 DELTA</span>
+            </div>
+        </div>
+
+        <!-- Referral Program Section -->
+        <div class="bg-slate-900/80 p-5 rounded-xl border border-slate-700/60 text-left mb-6">
+            <h2 class="text-md font-semibold text-cyan-300 mb-1 flex items-center gap-2">
+                <span>🎁</span> Refer & Earn DeltaCoin
+            </h2>
+            <p class="text-xs text-slate-400 mb-4">
+                Share your unique referral link below. When a user connects via your link, earn instant referral bonuses!
+            </p>
+            
+            <label class="block text-[11px] text-slate-400 mb-1 font-medium">Your Referral Link:</label>
+            <div class="flex items-center space-x-2 mb-3">
+                <input type="text" id="referralLink" readonly class="bg-slate-950 text-xs text-slate-300 px-3 py-2.5 rounded-lg w-full border border-slate-800 focus:outline-none" value="Connect wallet to generate your link">
+                <button onclick="copyReferralLink()" class="bg-cyan-600 hover:bg-cyan-500 text-slate-950 font-bold text-xs py-2.5 px-4 rounded-lg transition duration-150 whitespace-nowrap shadow">Copy</button>
+            </div>
+            
+            <div class="grid grid-cols-2 gap-3 pt-2 border-t border-slate-800/80 text-center">
+                <div class="bg-slate-950/50 p-2.5 rounded-lg border border-slate-800/50">
+                    <p class="text-[10px] text-slate-400">Total Referrals</p>
+                    <p id="refCount" class="text-sm font-bold text-cyan-400">0</p>
+                </div>
+                <div class="bg-slate-950/50 p-2.5 rounded-lg border border-slate-800/50">
+                    <p class="text-[10px] text-slate-400">Referral Earnings</p>
+                    <p id="refEarnings" class="text-sm font-bold text-green-400">0.00 DELTA</p>
+                </div>
+            </div>
+            <p id="copyMsg" class="text-[11px] text-green-400 mt-2 text-center h-4 font-medium"></p>
+        </div>
+
+        <!-- Referred Status Notice (If opened via referral) -->
+        <div id="referredNotice" class="hidden bg-indigo-950/50 border border-indigo-800/50 p-3 rounded-xl text-center text-xs text-indigo-300">
+            ✨ You joined through a referral link! Connect your wallet to claim your joining bonus.
+        </div>
+    </div>
+
+    <script>
+        let connectedAccount = "";
+
+        // Check if user came via referral link on load
+        window.onload = function() {
+            const urlParams = new URLSearchParams(window.location.search);
+            const refBy = urlParams.get('ref');
+            if (refBy) {
+                document.getElementById('referredNotice').classList.remove('hidden');
+                console.log("Referred by: ", refBy);
+            }
+        }
+
+        async function connectWallet() {
+            if (typeof window.ethereum !== 'undefined') {
+                try {
+                    const accounts = await window.ethereum.request({ method: 'eth_requestAccounts' });
+                    connectedAccount = accounts[0];
+                    
+                    // Update UI for Connected State
+                    const btn = document.getElementById('connectBtn');
+                    btn.innerText = 'Wallet Connected';
+                    btn.classList.remove('bg-cyan-500', 'hover:bg-cyan-600', 'text-slate-950');
+                    btn.classList.add('bg-green-600', 'text-white');
+                    
+                    document.getElementById('walletInfo').classList.remove('hidden');
+                    document.getElementById('accountAddress').innerText = connectedAccount;
+                    
+                    // Simulate fetching token balance (Can be replaced with real contract call)
+                    document.getElementById('tokenBalance').innerText = "1,250.00 DELTA";
+
+                    // Generate unique referral link based on connected wallet
+                    const cleanUrl = window.location.origin + window.location.pathname;
+                    const refLink = `${cleanUrl}?ref=${connectedAccount}`;
+                    document.getElementById('referralLink').value = refLink;
+
+                    // Load mock referral stats from localStorage if any exist
+                    loadReferralStats(connectedAccount);
+
+                } catch (error) {
+                    console.error("User rejected request", error);
+                }
+            } else {
+                alert('Please install MetaMask extension to use this DApp!');
+            }
+        }
+
+        function copyReferralLink() {
+            const refInput = document.getElementById('referralLink');
+            if(!connectedAccount) {
+                alert('Pehle apna MetaMask wallet connect karein!');
+                return;
+            }
+            refInput.select();
+            refInput.setSelectionRange(0, 99999); 
+            navigator.clipboard.writeText(refInput.value);
+            
+            const msg = document.getElementById('copyMsg');
+            msg.innerText = '✓ Referral link copied to clipboard successfully!';
+            setTimeout(() => { msg.innerText = ''; }, 3500);
+        }
+
+        function loadReferralStats(account) {
+            // Simulated local tracking for referral stats
+            let stats = JSON.parse(localStorage.getItem('ref_stats_' + account)) || { count: 2, earnings: "50.00" };
+            document.getElementById('refCount').innerText = stats.count;
+            document.getElementById('refEarnings').innerText = stats.earnings + " DELTA";
+        }
+    </script>
+</body>
+</html>

@@ -1,0 +1,25 @@
+@import url('https://fonts.googleapis.com/css2?family=DM+Mono:wght@400;500&family=Manrope:wght@400;500;600;700;800&display=swap');
+
+:root { color-scheme: dark; font-family: 'Manrope', sans-serif; background: #090b0d; color: #eef2ed; }
+* { box-sizing: border-box; }
+body { margin: 0; min-width: 320px; min-height: 100vh; background: radial-gradient(circle at 88% 0%, rgba(180, 255, 85, .08), transparent 25rem), #090b0d; }
+button, input { font: inherit; }
+button { -webkit-tap-highlight-color: transparent; }
+.shell { width: min(1180px, calc(100% - 32px)); margin: 0 auto; }
+.panel { background: #101316; border: 1px solid #252a2d; box-shadow: 0 18px 60px rgba(0,0,0,.22); }
+.eyebrow { font-family: 'DM Mono', monospace; letter-spacing: .13em; text-transform: uppercase; font-size: 11px; color: #909995; }
+.mono { font-family: 'DM Mono', monospace; }
+.btn { border: 1px solid #32393c; background: #181c1f; color: #eff4ef; border-radius: 10px; padding: 10px 14px; font-weight: 700; transition: .18s ease; cursor: pointer; }
+.btn:hover:not(:disabled) { border-color: #b7ff58; color: #b7ff58; transform: translateY(-1px); }
+.btn:focus-visible, input:focus-visible { outline: 2px solid #b7ff58; outline-offset: 2px; }
+.btn:disabled { opacity: .45; cursor: not-allowed; }
+.btn-primary { background: #b7ff58; color: #0a0c0d; border-color: #b7ff58; }
+.btn-primary:hover:not(:disabled) { color: #0a0c0d; background: #c5ff79; }
+.field { width: 100%; border: 1px solid #303638; background: #0b0e10; color: #f5f7f3; border-radius: 10px; padding: 12px 13px; }
+.field::placeholder { color: #5f6864; }
+.rule { border-color: #252a2d; }
+.status-dot { width: 8px; height: 8px; border-radius: 50%; background: #5d6562; box-shadow: 0 0 0 4px rgba(93,101,98,.12); }
+.status-dot.live { background: #b7ff58; box-shadow: 0 0 0 4px rgba(183,255,88,.12); }
+.action-row { display: grid; grid-template-columns: 1fr auto; gap: 10px; }
+.scrollbar::-webkit-scrollbar { width: 8px; }.scrollbar::-webkit-scrollbar-thumb { background:#2d3335; border-radius: 9px; }
+@media (max-width: 720px) { .shell { width: min(100% - 20px, 1180px); } .action-row { grid-template-columns: 1fr; } }
