@@ -1,0 +1,144 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>DeltaCoin Portal</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+</head>
+<body class="bg-slate-950 text-white min-h-screen flex flex-col items-center justify-center p-4">
+    <div class="bg-slate-900 p-6 md:p-8 rounded-3xl shadow-2xl max-w-xl w-full border border-slate-800 space-y-6">
+        
+        <div class="text-center">
+            <h1 class="text-3xl font-bold text-cyan-400">DeltaCoin DApp</h1>
+            <p class="text-slate-400 text-xs mt-1">8 USD = 10 DELTA | Mining & Tier Ecosystem</p>
+        </div>
+        
+        <button id="connectBtn" onclick="connectWallet()" class="w-full bg-cyan-500 hover:bg-cyan-400 text-slate-950 font-bold py-3 px-6 rounded-2xl text-sm transition">
+            Connect MetaMask
+        </button>
+        
+        <div id="walletInfo" class="hidden bg-slate-950 p-4 rounded-2xl border border-slate-800 space-y-2 text-xs">
+            <p class="text-slate-400">Wallet: <span id="accountAddress" class="text-cyan-300 font-mono"></span></p>
+            <p class="text-slate-400">Balance: <span id="tokenBalance" class="text-green-400 font-bold text-sm">0.00 DELTA</span></p>
+        </div>
+
+        <div class="bg-slate-950 p-4 rounded-2xl border border-slate-800 space-y-3">
+            <h2 class="text-xs font-bold text-indigo-300 uppercase">Buy DeltaCoin (8 USD = 10 DELTA)</h2>
+            <div class="flex gap-2">
+                <input type="number" id="usdInput" placeholder="Enter USD (e.g. 8)" class="bg-slate-900 text-xs px-3 py-2 rounded-xl w-full border border-slate-800 focus:outline-none text-white">
+                <button onclick="buyTokens()" class="bg-indigo-600 hover:bg-indigo-500 text-white text-xs px-4 py-2 rounded-xl font-bold">Buy</button>
+            </div>
+        </div>
+
+        <div class="bg-slate-950 p-4 rounded-2xl border border-slate-800 space-y-3">
+            <h2 class="text-xs font-bold text-amber-400 uppercase">Mining (Target: 300 Mins = 5 DELTA)</h2>
+            <div class="flex justify-between text-xs text-slate-400">
+                <span>Monthly Active Time: <strong id="miningTime" class="text-amber-300">0 / 300 Mins</strong></span>
+                <span id="miningState" class="text-slate-500 font-bold">Paused</span>
+            </div>
+            <button onclick="toggleMining()" id="miningBtn" class="w-full bg-amber-500 hover:bg-amber-400 text-slate-950 font-bold text-xs py-2 rounded-xl">
+                Start Active Mining
+            </button>
+        </div>
+
+        <div class="bg-slate-950 p-4 rounded-2xl border border-slate-800 space-y-2 text-xs">
+            <h2 class="font-bold text-purple-400 uppercase">Tier Status (Req: 15+ Referrals)</h2>
+            <p class="text-slate-400">Current Tier: <strong id="tierName" class="text-purple-300">Bronze</strong></p>
+            <p class="text-slate-400">Total Referrals: <strong id="refCount" class="text-cyan-400">0</strong></p>
+            <input type="text" id="refLink" readonly class="bg-slate-900 w-full p-2 rounded-xl text-slate-300 font-mono text-[11px]" value="Connect wallet to generate link">
+        </div>
+    </div>
+
+    <script>
+        let user = JSON.parse(localStorage.getItem('delta_user')) || { balance: 0, mins: 0, refs: 0 };
+        let account = localStorage.getItem('delta_acc') || "";
+        let miningInterval = null;
+        let isMining = false;
+
+        window.onload = function() {
+            if(account) updateUI();
+        }
+
+        function save() {
+            localStorage.setItem('delta_user', JSON.stringify(user));
+            localStorage.setItem('delta_acc', account);
+        }
+
+        async function connectWallet() {
+            if (window.ethereum) {
+                const accs = await window.ethereum.request({ method: 'eth_requestAccounts' });
+                account = accs[0];
+                save();
+                updateUI();
+            } else {
+                alert('MetaMask not found!');
+            }
+        }
+
+        function updateUI() {
+            document.getElementById('connectBtn').innerText = "Connected";
+            document.getElementById('connectBtn').className = "w-full bg-green-600 text-white font-bold py-3 px-6 rounded-2xl text-sm";
+            document.getElementById('walletInfo').classList.remove('hidden');
+            document.getElementById('accountAddress').innerText = account.substring(0,6) + "..." + account.substring(38);
+            document.getElementById('tokenBalance').innerText = user.balance.toFixed(2) + " DELTA";
+            document.getElementById('miningTime').innerText = user.mins + " / 300 Mins";
+            document.getElementById('refCount').innerText = user.refs;
+            document.getElementById('refLink').value = window.location.origin + window.location.pathname + "?ref=" + account;
+
+            let tier = "Bronze";
+            if(user.refs >= 15) tier = "Silver";
+            if(user.refs >= 30) tier = "Gold";
+            document.getElementById('tierName').innerText = tier;
+        }
+
+        function buyTokens() {
+            if(!account) { alert('Connect wallet first!'); return; }
+            let usd = parseFloat(document.getElementById('usdInput').value);
+            if(isNaN(usd) || usd <= 0) { alert('Enter valid USD'); return; }
+            
+            let delta = (usd / 8) * 10;
+            user.balance += delta;
+            save();
+            updateUI();
+            alert(`Successfully purchased ${delta.toFixed(2)} DELTA!`);
+        }
+
+        function toggleMining() {
+            if(!account) { alert('Connect wallet first!'); return; }
+            isMining = !isMining;
+            let btn = document.getElementById('miningBtn');
+            let state = document.getElementById('miningState');
+
+            if(isMining) {
+                btn.innerText = "Pause Mining";
+                btn.className = "w-full bg-rose-600 text-white font-bold text-xs py-2 rounded-xl";
+                state.innerText = "Active";
+                state.className = "text-green-400 font-bold";
+
+                miningInterval = setInterval(() => {
+                    if(user.mins >= 300) {
+                        alert('Monthly target completed!');
+                        toggleMining();
+                        return;
+                    }
+                    user.mins += 1; 
+                    if(user.mins >= 300 && user.mins < 301) {
+                        user.balance += 5; 
+                        alert('300 mins completed! 5 DELTA unlocked.');
+                    }
+                    save();
+                    updateUI();
+                }, 60000); 
+
+            } else {
+                btn.innerText = "Start Active Mining";
+                btn.className = "w-full bg-amber-500 hover:bg-amber-400 text-slate-950 font-bold text-xs py-2 rounded-xl";
+                state.innerText = "Paused";
+                state.className = "text-slate-500 font-bold";
+                clearInterval(miningInterval);
+            }
+        }
+    </script>
+</body>
+</html>
