@@ -5,5 +5,6 @@
   "chainId": 137,
   "totalSupply": "1000000000",
   "contractAddress": "0xB0cea145750E76Ccb24a0007206f2485dd5bf21a",
+  "tallyForm": "https://tally.so/r/J97gqJ",
   "dexLink": "https://quickswap.exchange/#/swap?outputCurrency=0xB0cea145750E76Ccb24a0007206f2485dd5bf21a"
 }
