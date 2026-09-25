@@ -1,0 +1,28 @@
+{
+  "name": "Delta Coin",
+  "symbol": "DLC",
+  "description": "AI \u00d7 Crypto \u00d7 Code community portal for Delta Coin on Polygon.",
+  "network": {
+    "name": "Polygon",
+    "chainId": 137,
+    "nativeCurrency": "POL"
+  },
+  "token": {
+    "contractAddress": "0xB0cea145750E76Ccb24a0007206f2485dd5bf21a",
+    "totalSupply": "1000000000",
+    "decimals": 18
+  },
+  "links": {
+    "quickswap": "https://quickswap.exchange/#/swap?outputCurrency=0xB0cea145750E76Ccb24a0007206f2485dd5bf21a&chain=137",
+    "tally": "https://tally.so/r/J97gqJ",
+    "polygonscan": "https://polygonscan.com/address/0xB0cea145750E76Ccb24a0007206f2485dd5bf21a"
+  },
+  "donations": {
+    "ethereum_polygon_bnb": "0xDdC03Ca5d7A644547e720851F3999dF2a2145292",
+    "usdt_erc20_trc20": "0xdAC17F958D2ee523a2206206994597C13D831ec7"
+  },
+  "githubPages": {
+    "entrypoint": "index.html",
+    "static": true
+  }
+}

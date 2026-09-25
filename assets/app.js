@@ -1,0 +1,6 @@
+const LAUNCH_DATE="2026-10-31T00:00:00+05:30";
+const pad=n=>String(Math.max(0,n)).padStart(2,"0");
+function updateCountdown(){const d=new Date(LAUNCH_DATE).getTime()-Date.now();const v={days:Math.floor(d/86400000),hours:Math.floor(d/3600000)%24,minutes:Math.floor(d/60000)%60,seconds:Math.floor(d/1000)%60};for(const[k,x]of Object.entries(v)){const e=document.getElementById(k);if(e)e.textContent=pad(x)}if(d<=0){const e=document.querySelector(".launch-panel h2");if(e)e.textContent="Protocol launch window is open."}}
+updateCountdown();setInterval(updateCountdown,1000);
+const toast=document.getElementById("toast");function showToast(m){if(!toast)return;toast.textContent=m;toast.classList.add("show");setTimeout(()=>toast.classList.remove("show"),1800)}
+document.querySelectorAll("[data-copy]").forEach(b=>b.addEventListener("click",async()=>{const e=document.getElementById(b.dataset.copy);if(!e)return;try{await navigator.clipboard.writeText(e.textContent.trim());showToast("Address copied");b.textContent="COPIED";setTimeout(()=>b.textContent="COPY",1400)}catch{showToast("Copy unavailable — select the address manually")}}));
