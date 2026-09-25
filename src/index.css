@@ -1,25 +1,87 @@
-@import url('https://fonts.googleapis.com/css2?family=DM+Mono:wght@400;500&family=Manrope:wght@400;500;600;700;800&display=swap');
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Delta Coin (DLC) - Official Portal</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            background-color: #f4f6f9;
+            color: #333;
+            margin: 0;
+            padding: 0;
+            text-align: center;
+        }
+        header {
+            background: linear-gradient(135deg, #1e3c72, #2a5298);
+            color: white;
+            padding: 50px 20px;
+        }
+        h1 { margin: 0; font-size: 2.5em; }
+        p { font-size: 1.2em; color: #ddd; }
+        .container {
+            max-width: 800px;
+            margin: 40px auto;
+            background: white;
+            padding: 30px;
+            border-radius: 10px;
+            box-shadow: 0 4px 10px rgba(0,0,0,0.1);
+        }
+        .contract-box {
+            background: #eef2f7;
+            padding: 15px;
+            border-radius: 5px;
+            font-family: monospace;
+            word-break: break-all;
+            font-size: 1.1em;
+            color: #333;
+            margin: 20px 0;
+        }
+        .btn {
+            display: inline-block;
+            background: #ff9900;
+            color: white;
+            padding: 12px 25px;
+            text-decoration: none;
+            font-weight: bold;
+            border-radius: 5px;
+            margin-top: 15px;
+            transition: 0.3s;
+        }
+        .btn:hover { background: #e68a00; }
+        footer {
+            margin-top: 40px;
+            padding: 20px;
+            color: #777;
+            font-size: 0.9em;
+        }
+    </style>
+</head>
+<body>
 
-:root { color-scheme: dark; font-family: 'Manrope', sans-serif; background: #090b0d; color: #eef2ed; }
-* { box-sizing: border-box; }
-body { margin: 0; min-width: 320px; min-height: 100vh; background: radial-gradient(circle at 88% 0%, rgba(180, 255, 85, .08), transparent 25rem), #090b0d; }
-button, input { font: inherit; }
-button { -webkit-tap-highlight-color: transparent; }
-.shell { width: min(1180px, calc(100% - 32px)); margin: 0 auto; }
-.panel { background: #101316; border: 1px solid #252a2d; box-shadow: 0 18px 60px rgba(0,0,0,.22); }
-.eyebrow { font-family: 'DM Mono', monospace; letter-spacing: .13em; text-transform: uppercase; font-size: 11px; color: #909995; }
-.mono { font-family: 'DM Mono', monospace; }
-.btn { border: 1px solid #32393c; background: #181c1f; color: #eff4ef; border-radius: 10px; padding: 10px 14px; font-weight: 700; transition: .18s ease; cursor: pointer; }
-.btn:hover:not(:disabled) { border-color: #b7ff58; color: #b7ff58; transform: translateY(-1px); }
-.btn:focus-visible, input:focus-visible { outline: 2px solid #b7ff58; outline-offset: 2px; }
-.btn:disabled { opacity: .45; cursor: not-allowed; }
-.btn-primary { background: #b7ff58; color: #0a0c0d; border-color: #b7ff58; }
-.btn-primary:hover:not(:disabled) { color: #0a0c0d; background: #c5ff79; }
-.field { width: 100%; border: 1px solid #303638; background: #0b0e10; color: #f5f7f3; border-radius: 10px; padding: 12px 13px; }
-.field::placeholder { color: #5f6864; }
-.rule { border-color: #252a2d; }
-.status-dot { width: 8px; height: 8px; border-radius: 50%; background: #5d6562; box-shadow: 0 0 0 4px rgba(93,101,98,.12); }
-.status-dot.live { background: #b7ff58; box-shadow: 0 0 0 4px rgba(183,255,88,.12); }
-.action-row { display: grid; grid-template-columns: 1fr auto; gap: 10px; }
-.scrollbar::-webkit-scrollbar { width: 8px; }.scrollbar::-webkit-scrollbar-thumb { background:#2d3335; border-radius: 9px; }
-@media (max-width: 720px) { .shell { width: min(100% - 20px, 1180px); } .action-row { grid-template-columns: 1fr; } }
+    <header>
+        <h1>Delta Coin (DLC)</h1>
+        <p>The Future of Decentralized Finance on Polygon Network</p>
+    </header>
+
+    <div class="container">
+        <h2>About Delta Coin</h2>
+        <p>Delta Coin (DLC) is an ERC-20 token built on the Polygon blockchain with a fixed total supply of 1 Billion tokens.</p>
+
+        <h3>Contract Address (Polygon)</h3>
+        <div class="contract-box">
+            0xB0cea145750E76Ccb24a0007206f2485dd5bf21a
+        </div>
+
+        <h3>Trade DLC</h3>
+        <p>You can trade and swap Delta Coin directly on decentralized exchanges.</p>
+        <a href="https://quickswap.exchange/#/swap?outputCurrency=0xB0cea145750E76Ccb24a0007206f2485dd5bf21a" target="_blank" class="btn">Swap on QuickSwap</a>
+    </div>
+
+    <footer>
+        &copy; 2026 Delta Coin Project. All rights reserved.
+    </footer>
+
+</body>
+</html>
