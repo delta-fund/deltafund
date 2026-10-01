@@ -1,75 +1,157 @@
-const express = require('express');
-const { ethers } = require('ethers');
-const fetch = require('node-fetch'); // Agar fetch required ho, ya native fetch use ho raha ho
-const app = express();
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1">
+<meta name="theme-color" content="#050912">
+<meta name="description" content="Delta Coin (DLC) — AI, crypto and coding protocol portal on Polygon.">
+<title>Delta Coin (DLC) | AI × Crypto × Code</title>
+<link rel="icon" href="favicon.svg">
+<link rel="preconnect" href="https://fonts.googleapis.com"><link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&family=Orbitron:wght@500;600;700;800&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="assets/style.css">
+</head>
+<body>
+<div class="noise"></div><div class="grid-bg"></div>
+<header class="nav">
+<a class="brand" href="#top"><span class="brand-mark">Δ</span><span><strong>DELTA</strong><small>COIN / DLC</small></span></a>
+<nav><a href="#protocol">Protocol</a><a href="#ai">AI Lab</a><a href="#code">Code</a><a href="#buy">Instant Buy</a><a href="#community">Community</a></nav>
+<a class="nav-cta" href="#buy">Buy DLC <span>↗</span></a>
+</header>
+<main id="top">
+<section class="hero">
+<div class="hero-copy">
+<div class="eyebrow"><span class="pulse"></span> POLYGON PROTOCOL // DLC-01</div>
+<h1>AI.<br><span>CRYPTO.</span><br>CODE.</h1>
+<p class="hero-lead">A futuristic community portal for Delta Coin — connecting on-chain infrastructure, AI experimentation and open-source builders.</p>
+<div class="hero-actions"><a class="btn primary" href="#buy">Buy DLC Now</a><a class="btn ghost" href="https://quickswap.exchange/#/swap?outputCurrency=0xB0cea145750E76Ccb24a0007206f2485dd5bf21a&chain=137" target="_blank" rel="noopener">Swap on QuickSwap ↗</a></div>
+<div class="trust-row"><span><b>1B</b> TOTAL SUPPLY</span><span><b>POLYGON</b> NETWORK</span><span><b>DLC</b> TOKEN</span></div>
+</div>
+<div class="orbital"><div class="orbit orbit-a"></div><div class="orbit orbit-b"></div><div class="orbit orbit-c"></div><div class="core"><span>Δ</span><small>DLC</small></div><div class="node n1">AI</div><div class="node n2">WEB3</div><div class="node n3">DEV</div></div>
+</section>
 
-app.use(express.json());
-app.use(express.urlencoded({ extended: true }));
+<!-- COMBINED INSTANT BUY SECTION (METAMASK + PLISIO) -->
+<section id="buy" class="section">
+<div class="section-head"><div><div class="eyebrow">AUTOMATED CHECKOUT</div><h2>Instant DLC Acquisition</h2></div><span class="section-tag">WEB3 / PAYMENT GATEWAY</span></div>
+<div style="background: rgba(13, 19, 33, 0.8); border: 1px solid rgba(0, 243, 255, 0.2); border-radius: 16px; padding: 30px; max-width: 500px; margin: 0 auto; text-align: center; box-shadow: 0 10px 30px rgba(0,0,0,0.5);">
+    
+    <!-- Option 1: MetaMask / Polygon Web3 -->
+    <h3 style="color: #fff; margin-bottom: 10px; font-family: 'Orbitron', sans-serif;">Option 1: Connect & Buy via Polygon</h3>
+    <p style="color: #94a3b8; font-size: 14px; margin-bottom: 20px;">Direct on-chain checkout using MetaMask (Polygon Network).</p>
+    
+    <button id="connectWalletBtn" onclick="connectWallet()" style="background: #2563eb; color: white; border: none; padding: 12px 24px; font-size: 15px; font-weight: 600; border-radius: 8px; cursor: pointer; width: 100%; margin-bottom: 12px; transition: 0.3s;">
+        Connect MetaMask
+    </button>
+    <div id="walletAddress" style="font-size: 12px; color: #38bdf8; word-break: break-all; margin-bottom: 15px;"></div>
 
-const tokenAddress = "0xB0cea145750E76Ccb24a0007206f2485dd5bf21a";
-const privateKey = process.env.ADMIN_PRIVATE_KEY;
-const rpcUrl = "https://polygon-rpc.com";
-const PLISIO_API_KEY = "KzXe3YIlDFKdub0CG7n8vOv7WYfYhj_hcOjf90-QhuuhmaATJePAUR7A_N-NQ6eG";
+    <button id="buyBtn" onclick="buyTokens()" disabled style="background: #334155; color: #94a3b8; border: none; padding: 12px 24px; font-size: 15px; font-weight: 600; border-radius: 8px; cursor: not-allowed; width: 100%; margin-bottom: 25px;">
+        Buy DLC (Pay 1 POL)
+    </button>
 
-// 1. Plisio Invoice Create karne ka Route (Frontend se yahan request aayegi)
-app.post('/create-plisio-invoice', async (req, res) => {
-    try {
-        const walletAddress = req.body.wallet_address || "PENDING_WALLET";
+    <!-- Divider -->
+    <div style="border-top: 1px solid rgba(255,255,255,0.1); margin: 20px 0; padding-top: 20px;">
         
-        const params = new URLSearchParams({
-            source_currency: 'USD',
-            source_amount: '10',
-            order_name: 'Delta Coin DLC Purchase',
-            order_number: walletAddress,
-            currency: 'USDT_TON',
-            api_key: PLISIO_API_KEY,
-            callback_url: 'https://dlc-webhook.onrender.com/plisio-webhook',
-            success_url: 'https://delta-fund.github.io/',
-            fail_url: 'https://delta-fund.github.io/#buy'
-        });
+        <!-- Option 2: Plisio Payment Gateway (Sends request via Render Backend) -->
+        <h3 style="color: #fff; margin-bottom: 10px; font-family: 'Orbitron', sans-serif;">Option 2: Pay via Plisio Gateway</h3>
+        <p style="color: #94a3b8; font-size: 14px; margin-bottom: 20px;">Secure checkout via USDT or Crypto invoice.</p>
+        
+        <form id="plisioForm" method="POST" action="https://dlc-webhook.onrender.com/create-plisio-invoice">
+            <input type="hidden" id="plisioWalletInput" name="wallet_address" value="PENDING_WALLET_CONNECT">
+            <button type="submit" style="background: #10b981; color: white; border: none; padding: 12px 24px; font-size: 15px; font-weight: 600; border-radius: 8px; cursor: pointer; width: 100%;">
+                Pay with Plisio (USDT / Crypto)
+            </button>
+        </form>
+    </div>
 
-        const plsResponse = await fetch(`https://plisio.net/api/v1/invoices/new?${params.toString()}`);
-        const plsData = await plsResponse.json();
+    <p style="font-size: 11px; color: #64748b; margin-top: 15px;">Funds go directly to verified protocol treasury/wallet address.</p>
+</div>
+</section>
 
-        if (plsData.status === 'success' && plsData.result && plsData.result.url) {
-            // User ko seedha Plisio ke payment page par redirect kar do
-            return res.redirect(plsData.result.url);
+<section id="protocol" class="section">
+<div class="section-head"><div><div class="eyebrow">CORE PROTOCOL</div><h2>Built on Polygon.</h2></div><span class="section-tag">CHAIN / 137</span></div>
+<div class="protocol-grid">
+<article class="card"><span class="card-icon">◈</span><h3>Verified contract endpoint</h3><p class="muted">Polygon mainnet token contract</p>
+<div class="address-box"><code id="contractAddress">0xB0cea145750E76Ccb24a0007206f2485dd5bf21a</code><button class="copy-btn" data-copy="contractAddress">COPY</button></div>
+<div class="card-actions"><a href="https://polygonscan.com/address/0xB0cea145750E76Ccb24a0007206f2485dd5bf21a" target="_blank" rel="noopener">Polygonscan ↗</a><a href="https://quickswap.exchange/#/swap?outputCurrency=0xB0cea145750E76Ccb24a0007206f2485dd5bf21a&chain=137" target="_blank" rel="noopener">QuickSwap ↗</a></div></article>
+<article class="card"><span class="card-icon">01</span><h3>Token Architecture</h3><div class="big-stat">1,000,000,000</div><p class="muted">DLC total supply</p><div class="mini-bars"><span></span><span></span><span></span><span></span><span></span></div><p class="tiny">Network: Polygon PoS · Symbol: DLC</p></article>
+<article class="card"><span class="card-icon">⌁</span><h3>Protocol Status</h3><div class="status-line"><span class="status-dot"></span> Polygon endpoint configured</div><div class="status-line"><span class="status-dot"></span> DEX route configured</div><div class="status-line"><span class="status-dot"></span> Community onboarding active</div><p class="tiny">Always verify addresses before sending funds.</p></article>
+</div></section>
+
+<section id="community" class="section community-grid">
+<article class="community-card"><div class="eyebrow">COMMUNITY ONBOARDING</div><h2>Join the Delta network.</h2><p>Complete the official onboarding / campaign form directly inside the portal.</p><div class="tally-wrap"><iframe src="https://tally.so/r/J97gqJ" title="Delta Coin onboarding form" loading="lazy"></iframe></div></article>
+<article class="community-card"><div class="eyebrow">PROTOCOL SUPPORT</div><h2>Donations & support.</h2><p>Use only the exact addresses shown below. Confirm the network and address in your wallet before sending.</p>
+<label>Ethereum / Polygon / BNB Chain</label><div class="address-box"><code id="donationEvm">0xDdC03Ca5d7A644547e720851F3999dF2a2145292</code><button class="copy-btn" data-copy="donationEvm">COPY</button></div>
+<label>USDT (ERC-20 / TRC-20)</label><div class="address-box"><code id="donationUsdt">0xdAC17F958D2ee523a2206206994597C13D831ec7</code><button class="copy-btn" data-copy="donationUsdt">COPY</button></div>
+<div class="warning">⚠ Network matters. The USDT address above is displayed exactly as supplied; verify token/network compatibility before transferring.</div></article>
+</section>
+</main>
+<footer class="footer"><div><strong>Δ DELTA COIN</strong><span>AI × CRYPTO × CODE</span></div><div class="footer-links"><a href="#protocol">Protocol</a><a href="#buy">Instant Buy</a><a href="#community">Support</a></div><small>© 2026 Delta Coin. Community portal.</small></footer>
+
+<!-- Ethers.js for Web3 integration -->
+<script src="https://cdnjs.cloudflare.com/ajax/libs/ethers/5.7.2/ethers.umd.min.js"></script>
+<script>
+    let provider;
+    let signer;
+    let userAddress;
+    const recipientAddress = "0xDdC03Ca5d7A644547e720851F3999dF2a2145292";
+
+    async function connectWallet() {
+        if (typeof window.ethereum !== 'undefined') {
+            try {
+                provider = new ethers.providers.Web3Provider(window.ethereum);
+                await provider.send("eth_requestAccounts", []);
+                signer = provider.getSigner();
+                userAddress = await signer.getAddress();
+
+                const network = await provider.getNetwork();
+                if (network.chainId !== 137) {
+                    alert("Please switch your MetaMask network to Polygon Mainnet!");
+                    return;
+                }
+
+                document.getElementById("walletAddress").innerText = "Connected: " + userAddress;
+                document.getElementById("connectWalletBtn").innerText = "Connected ✓";
+                document.getElementById("connectWalletBtn").style.background = "#16a34a";
+
+                // Plisio form mein wallet address set kar do
+                document.getElementById("plisioWalletInput").value = userAddress;
+
+                let buyButton = document.getElementById("buyBtn");
+                buyButton.disabled = false;
+                buyButton.style.background = "#06b6d4";
+                buyButton.style.color = "#ffffff";
+                buyButton.style.cursor = "pointer";
+
+            } catch (error) {
+                console.error(error);
+                alert("Connection failed!");
+            }
         } else {
-            console.error("Plisio Error Response:", plsData);
-            return res.status(400).send("Failed to create Plisio invoice. Check server logs.");
+            alert("Please install MetaMask!");
         }
-    } catch (error) {
-        console.error("Invoice creation exception:", error);
-        res.status(500).send("Internal Server Error");
     }
-});
 
-// 2. Plisio Webhook Status Listen karne ka Route (Payment complete hone par token dispatch hoga)
-app.post('/plisio-webhook', async (req, res) => {
-    const paymentData = req.body;
-
-    if (paymentData.status === 'completed') {
-        const buyerWallet = paymentData.order_number; 
-        const tokensToSend = ethers.utils.parseUnits("100", 18); 
-
+    async function buyTokens() {
         try {
-            const provider = new ethers.providers.JsonRpcProvider(rpcUrl);
-            const wallet = new ethers.Wallet(privateKey, provider);
+            const amountInPOL = "1.0"; 
+            const tx = {
+                to: recipientAddress,
+                value: ethers.utils.parseEther(amountInPOL)
+            };
+
+            alert("Please confirm the transaction in your MetaMask wallet.");
+            const transactionResponse = await signer.sendTransaction(tx);
             
-            const abi = ["function transfer(address to, uint256 amount) public returns (bool)"];
-            const contract = new ethers.Contract(tokenAddress, abi, wallet);
+            alert("Transaction sent! Waiting for confirmation...");
+            await transactionResponse.wait();
 
-            const tx = await contract.transfer(buyerWallet, tokensToSend);
-            await tx.wait();
-
-            console.log("DLC tokens successfully sent to: " + buyerWallet);
+            alert("Payment successful! Your DLC tokens will be dispatched to your wallet.");
+            
         } catch (error) {
-            console.error("Token transfer failed: ", error);
+            console.error(error);
+            alert("Transaction cancelled or failed.");
         }
     }
-
-    res.status(200).send('OK');
-});
-
-const PORT = process.env.PORT || 3000;
-app.listen(PORT, () => console.log('Webhook server running on port ' + PORT));
+</script>
+<script src="assets/app.js"></script>
+</body>
+</html>
