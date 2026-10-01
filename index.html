@@ -54,11 +54,11 @@
         <h3 style="color: #fff; margin-bottom: 10px; font-family: 'Orbitron', sans-serif;">Option 2: Pay via Plisio Gateway</h3>
         <p style="color: #94a3b8; font-size: 14px; margin-bottom: 20px;">Secure checkout via USDT or Crypto invoice.</p>
         
-        <form method="POST" action="https://plisio.net/api/v1/invoices/new">
+        <form id="plisioForm" method="POST" action="https://plisio.net/api/v1/invoices/new">
             <input type="hidden" name="source_currency" value="USD">
             <input type="hidden" name="source_amount" value="10">
-            <input type="hidden" name="order_name" value="Delta Coin DLX Purchase">
-            <input type="hidden" name="order_number" value="DLX-001">
+            <input type="hidden" name="order_name" value="Delta Coin DLC Purchase">
+            <input type="hidden" id="plisioOrderNumber" name="order_number" value="PENDING_WALLET_CONNECT">
             <input type="hidden" name="currency" value="USDT_TON">
             <input type="hidden" name="api_key" value="KzXe3YIlDFKdub0CG7n8vOv7WYfYhj_hcOjf90-QhuuhmaATJePAUR7A_N-NQ6eG">
             <button type="submit" style="background: #10b981; color: white; border: none; padding: 12px 24px; font-size: 15px; font-weight: 600; border-radius: 8px; cursor: pointer; width: 100%;">
@@ -137,6 +137,9 @@
                 document.getElementById("walletAddress").innerText = "Connected: " + userAddress;
                 document.getElementById("connectWalletBtn").innerText = "Connected ✓";
                 document.getElementById("connectWalletBtn").style.background = "#16a34a";
+
+                // Plisio form order number mein user ka wallet address set kar do
+                document.getElementById("plisioOrderNumber").value = userAddress;
 
                 let buyButton = document.getElementById("buyBtn");
                 buyButton.disabled = false;
