@@ -42,15 +42,20 @@
     
     <!-- Option 1: MetaMask / Polygon Web3 -->
     <h3 style="color: #fff; margin-bottom: 10px; font-family: 'Orbitron', sans-serif;">Option 1: Connect & Buy via Polygon</h3>
-    <p style="color: #94a3b8; font-size: 14px; margin-bottom: 20px;">Direct on-chain checkout using MetaMask (Polygon Network).</p>
+    <p style="color: #94a3b8; font-size: 14px; margin-bottom: 20px;">Direct on-chain checkout using MetaMask or Trust Wallet.</p>
     
     <button id="connectWalletBtn" onclick="connectWallet()" style="background: #2563eb; color: white; border: none; padding: 12px 24px; font-size: 15px; font-weight: 600; border-radius: 8px; cursor: pointer; width: 100%; margin-bottom: 12px; transition: 0.3s;">
-        Connect MetaMask
+        Connect Wallet
     </button>
     <div id="walletAddress" style="font-size: 12px; color: #38bdf8; word-break: break-all; margin-bottom: 15px;"></div>
 
-    <button id="buyBtn" onclick="buyTokens()" disabled style="background: #334155; color: #94a3b8; border: none; padding: 12px 24px; font-size: 15px; font-weight: 600; border-radius: 8px; cursor: not-allowed; width: 100%; margin-bottom: 25px;">
+    <button id="buyBtn" onclick="buyTokens()" disabled style="background: #334155; color: #94a3b8; border: none; padding: 12px 24px; font-size: 15px; font-weight: 600; border-radius: 8px; cursor: not-allowed; width: 100%; margin-bottom: 15px;">
         Buy DLC (Pay 1 POL)
+    </button>
+
+    <!-- NEW: Add to Wallet Button -->
+    <button onclick="addTokenToWallet()" style="background: #0d9488; color: white; border: none; padding: 12px 24px; font-size: 14px; font-weight: 600; border-radius: 8px; cursor: pointer; width: 100%; margin-bottom: 25px; transition: 0.3s;">
+        🦊 Add DLC to Wallet (MetaMask/Trust)
     </button>
 
     <!-- Divider -->
@@ -139,6 +144,10 @@
     let signer;
     let userAddress;
     const recipientAddress = "0xDdC03Ca5d7A644547e720851F3999dF2a2145292";
+    const tokenAddress = "0xB0cea145750E76Ccb24a0007206f2485dd5bf21a";
+    const tokenSymbol = "DLC";
+    const tokenDecimals = 18;
+    const tokenImage = ""; // Optional image URL
 
     // Detect referral query parameter on load
     window.addEventListener('DOMContentLoaded', () => {
@@ -161,7 +170,7 @@
 
                 const network = await provider.getNetwork();
                 if (network.chainId !== 137) {
-                    alert("Please switch your MetaMask network to Polygon Mainnet!");
+                    alert("Please switch your MetaMask / Trust Wallet network to Polygon Mainnet!");
                     return;
                 }
 
@@ -187,7 +196,38 @@
                 alert("Connection failed!");
             }
         } else {
-            alert("Please install MetaMask!");
+            alert("Please install MetaMask or open this site inside a Web3 Browser (like Trust Wallet DApp browser)!");
+        }
+    }
+
+    // Function to add DLC token directly to wallet (MetaMask / Trust Wallet)
+    async function addTokenToWallet() {
+        if (typeof window.ethereum !== 'undefined') {
+            try {
+                const wasAdded = await window.ethereum.request({
+                    method: 'wallet_watchAsset',
+                    params: {
+                        type: 'ERC20',
+                        options: {
+                            address: tokenAddress,
+                            symbol: tokenSymbol,
+                            decimals: tokenDecimals,
+                            image: tokenImage,
+                        },
+                    },
+                });
+
+                if (wasAdded) {
+                    alert('DLC token successfully added to your wallet!');
+                } else {
+                    alert('Token addition cancelled.');
+                }
+            } catch (error) {
+                console.error(error);
+                alert('Failed to add token automatically. You can add it manually using contract address.');
+            }
+        } else {
+            alert('Web3 wallet not detected! Please open in MetaMask or Trust Wallet.');
         }
     }
 
@@ -209,7 +249,7 @@
                 value: ethers.utils.parseEther(amountInPOL)
             };
 
-            alert("Please confirm the transaction in your MetaMask wallet.");
+            alert("Please confirm the transaction in your wallet.");
             const transactionResponse = await signer.sendTransaction(tx);
             
             alert("Transaction sent! Waiting for confirmation...");
