@@ -14,7 +14,13 @@
 <div class="noise"></div><div class="grid-bg"></div>
 <header class="nav">
 <a class="brand" href="#top"><span class="brand-mark">Δ</span><span><strong>DELTA</strong><small>COIN / DLC</small></span></a>
-<nav><a href="#protocol">Protocol</a><a href="#ai">AI Lab</a><a href="#code">Code</a><a href="#buy">Instant Buy</a><a href="#referral">Referral</a><a href="#community">Community</a></nav>
+<nav>
+    <a href="#protocol">Protocol</a>
+    <a href="#buy">Instant Buy</a>
+    <a href="#referral">Referral</a>
+    <a href="#roadmap">Roadmap</a>
+    <a href="#community">Community</a>
+</nav>
 <a class="nav-cta" href="#buy">Buy DLC <span>↗</span></a>
 </header>
 <main id="top">
@@ -50,7 +56,7 @@
     <!-- Divider -->
     <div style="border-top: 1px solid rgba(255,255,255,0.1); margin: 20px 0; padding-top: 20px;">
         
-        <!-- Option 2: Plisio Payment Gateway (Sends request via Render Backend) -->
+        <!-- Option 2: Plisio Payment Gateway -->
         <h3 style="color: #fff; margin-bottom: 10px; font-family: 'Orbitron', sans-serif;">Option 2: Pay via Plisio Gateway</h3>
         <p style="color: #94a3b8; font-size: 14px; margin-bottom: 20px;">Secure checkout via USDT or Crypto invoice.</p>
         
@@ -72,7 +78,7 @@
 <div class="section-head"><div><div class="eyebrow">REFERRAL REWARDS</div><h2>Invite & Earn Free DLC</h2></div><span class="section-tag">COMMUNITY 5 DLC</span></div>
 <div style="background: rgba(13, 19, 33, 0.8); border: 1px solid rgba(0, 243, 255, 0.2); border-radius: 16px; padding: 30px; max-width: 500px; margin: 0 auto; text-align: center; box-shadow: 0 10px 30px rgba(0,0,0,0.5);">
     <h3 style="color: #fff; margin-bottom: 10px; font-family: 'Orbitron', sans-serif;">Your Unique Referral Link</h3>
-    <p style="color: #94a3b8; font-size: 14px; margin-bottom: 20px;">Share your link with friends. Every successful registration gives you **5 DLC** straight into your wallet!</p>
+    <p style="color: #94a3b8; font-size: 14px; margin-bottom: 20px;">Share your link with friends. Every successful connection/registration gives you **5 DLC** rewards!</p>
     
     <input type="text" id="myReferralLink" readonly value="Connect wallet to generate link" style="width: 100%; padding: 12px; background: #0f172a; color: #38bdf8; border: 1px solid #475569; border-radius: 8px; text-align: center; font-size: 13px; margin-bottom: 15px;" />
     
@@ -83,6 +89,7 @@
 </div>
 </section>
 
+<!-- PROTOCOL DETAILS SECTION -->
 <section id="protocol" class="section">
 <div class="section-head"><div><div class="eyebrow">CORE PROTOCOL</div><h2>Built on Polygon.</h2></div><span class="section-tag">CHAIN / 137</span></div>
 <div class="protocol-grid">
@@ -93,6 +100,28 @@
 <article class="card"><span class="card-icon">⌁</span><h3>Protocol Status</h3><div class="status-line"><span class="status-dot"></span> Polygon endpoint configured</div><div class="status-line"><span class="status-dot"></span> DEX route configured</div><div class="status-line"><span class="status-dot"></span> Community onboarding active</div><p class="tiny">Always verify addresses before sending funds.</p></article>
 </div></section>
 
+<!-- PROJECT ROADMAP SECTION -->
+<section id="roadmap" class="section">
+<div class="section-head"><div><div class="eyebrow">PROJECT ROADMAP</div><h2>The Path Ahead</h2></div><span class="section-tag">2026 - 2027</span></div>
+<div class="protocol-grid">
+<article class="card">
+    <span class="card-icon">Q1</span>
+    <h3>Ecosystem Launch</h3>
+    <p class="muted">Smart contract deployment on Polygon, website portal launch, and referral reward system activation.</p>
+</article>
+<article class="card">
+    <span class="card-icon">Q2</span>
+    <h3>Community Growth</h3>
+    <p class="muted">Expanding global communities, airdrop campaigns, and strategic community partnerships.</p>
+</article>
+<article class="card">
+    <span class="card-icon">Q3</span>
+    <h3>DEX & Utility Expansion</h3>
+    <p class="muted">Enhanced liquidity pool integration on QuickSwap and launching advanced AI utility tools for DLC holders.</p>
+</article>
+</div>
+</section>
+
 <section id="community" class="section community-grid">
 <article class="community-card"><div class="eyebrow">COMMUNITY ONBOARDING</div><h2>Join the Delta network.</h2><p>Complete the official onboarding / campaign form directly inside the portal.</p><div class="tally-wrap"><iframe src="https://tally.so/r/J97gqJ" title="Delta Coin onboarding form" loading="lazy"></iframe></div></article>
 <article class="community-card"><div class="eyebrow">PROTOCOL SUPPORT</div><h2>Donations & support.</h2><p>Use only the exact addresses shown below. Confirm the network and address in your wallet before sending.</p>
@@ -101,7 +130,7 @@
 <div class="warning">⚠ Network matters. The USDT address above is displayed exactly as supplied; verify token/network compatibility before transferring.</div></article>
 </section>
 </main>
-<footer class="footer"><div><strong>Δ DELTA COIN</strong><span>AI × CRYPTO × CODE</span></div><div class="footer-links"><a href="#protocol">Protocol</a><a href="#buy">Instant Buy</a><a href="#referral">Referral</a><a href="#community">Support</a></div><small>© 2026 Delta Coin. Community portal.</small></footer>
+<footer class="footer"><div><strong>Δ DELTA COIN</strong><span>AI × CRYPTO × CODE</span></div><div class="footer-links"><a href="#protocol">Protocol</a><a href="#buy">Instant Buy</a><a href="#referral">Referral</a><a href="#roadmap">Roadmap</a><a href="#community">Support</a></div><small>© 2026 Delta Coin. Community portal.</small></footer>
 
 <!-- Ethers.js for Web3 integration -->
 <script src="https://cdnjs.cloudflare.com/ajax/libs/ethers/5.7.2/ethers.umd.min.js"></script>
@@ -166,7 +195,7 @@
         const copyText = document.getElementById("myReferralLink");
         if(copyText.value.includes("http")) {
             navigator.clipboard.writeText(copyText.value);
-            alert("Referral link copied to clipboard! Share with your friends to earn 5 DLC per referral.");
+            alert("Referral link copied to clipboard! Share with your friends.");
         } else {
             alert("Please connect your wallet first to generate your referral link.");
         }
