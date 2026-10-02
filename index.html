@@ -14,7 +14,7 @@
 <div class="noise"></div><div class="grid-bg"></div>
 <header class="nav">
 <a class="brand" href="#top"><span class="brand-mark">Δ</span><span><strong>DELTA</strong><small>COIN / DLC</small></span></a>
-<nav><a href="#protocol">Protocol</a><a href="#ai">AI Lab</a><a href="#code">Code</a><a href="#buy">Instant Buy</a><a href="#community">Community</a></nav>
+<nav><a href="#protocol">Protocol</a><a href="#ai">AI Lab</a><a href="#code">Code</a><a href="#buy">Instant Buy</a><a href="#referral">Referral</a><a href="#community">Community</a></nav>
 <a class="nav-cta" href="#buy">Buy DLC <span>↗</span></a>
 </header>
 <main id="top">
@@ -56,6 +56,7 @@
         
         <form id="plisioForm" method="POST" action="https://dlc-webhook.onrender.com/create-plisio-invoice">
             <input type="hidden" id="plisioWalletInput" name="wallet_address" value="PENDING_WALLET_CONNECT">
+            <input type="hidden" id="plisioUplineInput" name="upline_address" value="">
             <button type="submit" style="background: #10b981; color: white; border: none; padding: 12px 24px; font-size: 15px; font-weight: 600; border-radius: 8px; cursor: pointer; width: 100%;">
                 Pay with Plisio (USDT / Crypto)
             </button>
@@ -63,6 +64,22 @@
     </div>
 
     <p style="font-size: 11px; color: #64748b; margin-top: 15px;">Funds go directly to verified protocol treasury/wallet address.</p>
+</div>
+</section>
+
+<!-- REFERRAL PROGRAM SECTION -->
+<section id="referral" class="section">
+<div class="section-head"><div><div class="eyebrow">REFERRAL REWARDS</div><h2>Invite & Earn Free DLC</h2></div><span class="section-tag">COMMUNITY 5 DLC</span></div>
+<div style="background: rgba(13, 19, 33, 0.8); border: 1px solid rgba(0, 243, 255, 0.2); border-radius: 16px; padding: 30px; max-width: 500px; margin: 0 auto; text-align: center; box-shadow: 0 10px 30px rgba(0,0,0,0.5);">
+    <h3 style="color: #fff; margin-bottom: 10px; font-family: 'Orbitron', sans-serif;">Your Unique Referral Link</h3>
+    <p style="color: #94a3b8; font-size: 14px; margin-bottom: 20px;">Share your link with friends. Every successful registration gives you **5 DLC** straight into your wallet!</p>
+    
+    <input type="text" id="myReferralLink" readonly value="Connect wallet to generate link" style="width: 100%; padding: 12px; background: #0f172a; color: #38bdf8; border: 1px solid #475569; border-radius: 8px; text-align: center; font-size: 13px; margin-bottom: 15px;" />
+    
+    <button onclick="copyReferralLink()" style="background: #8b5cf6; color: white; border: none; padding: 12px 24px; font-size: 15px; font-weight: 600; border-radius: 8px; cursor: pointer; width: 100%; transition: 0.3s;">
+        Copy Referral Link
+    </button>
+    <div id="uplineStatus" style="font-size: 12px; color: #10b981; margin-top: 15px;"></div>
 </div>
 </section>
 
@@ -84,7 +101,7 @@
 <div class="warning">⚠ Network matters. The USDT address above is displayed exactly as supplied; verify token/network compatibility before transferring.</div></article>
 </section>
 </main>
-<footer class="footer"><div><strong>Δ DELTA COIN</strong><span>AI × CRYPTO × CODE</span></div><div class="footer-links"><a href="#protocol">Protocol</a><a href="#buy">Instant Buy</a><a href="#community">Support</a></div><small>© 2026 Delta Coin. Community portal.</small></footer>
+<footer class="footer"><div><strong>Δ DELTA COIN</strong><span>AI × CRYPTO × CODE</span></div><div class="footer-links"><a href="#protocol">Protocol</a><a href="#buy">Instant Buy</a><a href="#referral">Referral</a><a href="#community">Support</a></div><small>© 2026 Delta Coin. Community portal.</small></footer>
 
 <!-- Ethers.js for Web3 integration -->
 <script src="https://cdnjs.cloudflare.com/ajax/libs/ethers/5.7.2/ethers.umd.min.js"></script>
@@ -93,6 +110,17 @@
     let signer;
     let userAddress;
     const recipientAddress = "0xDdC03Ca5d7A644547e720851F3999dF2a2145292";
+
+    // Detect referral query parameter on load
+    window.addEventListener('DOMContentLoaded', () => {
+        const urlParams = new URLSearchParams(window.location.search);
+        const refParam = urlParams.get('ref');
+        if (refParam) {
+            localStorage.setItem("dlc_upline", refParam);
+            document.getElementById("uplineStatus").innerText = "Upline Referrer Detected: " + refParam.substring(0, 6) + "..." + refParam.substring(38);
+            document.getElementById("plisioUplineInput").value = refParam;
+        }
+    });
 
     async function connectWallet() {
         if (typeof window.ethereum !== 'undefined') {
@@ -112,8 +140,12 @@
                 document.getElementById("connectWalletBtn").innerText = "Connected ✓";
                 document.getElementById("connectWalletBtn").style.background = "#16a34a";
 
-                // Plisio form mein wallet address set kar do
+                // Update Plisio form inputs
                 document.getElementById("plisioWalletInput").value = userAddress;
+                
+                // Generate personal referral link
+                const refLink = window.location.origin + window.location.pathname + "?ref=" + userAddress;
+                document.getElementById("myReferralLink").value = refLink;
 
                 let buyButton = document.getElementById("buyBtn");
                 buyButton.disabled = false;
@@ -127,6 +159,16 @@
             }
         } else {
             alert("Please install MetaMask!");
+        }
+    }
+
+    function copyReferralLink() {
+        const copyText = document.getElementById("myReferralLink");
+        if(copyText.value.includes("http")) {
+            navigator.clipboard.writeText(copyText.value);
+            alert("Referral link copied to clipboard! Share with your friends to earn 5 DLC per referral.");
+        } else {
+            alert("Please connect your wallet first to generate your referral link.");
         }
     }
 
