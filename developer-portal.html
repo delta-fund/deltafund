@@ -3,7 +3,7 @@
 <head>
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width, initial-scale=1">
-<meta name="description" content="Developer portal for Delta Fund with integration guidance and ABI notes.">
+<meta name="description" content="Developer portal for Delta Fund — read-only guides, minimal ABI and integration examples.">
 <title>Developer Portal | Delta Fund</title>
 <link rel="icon" href="favicon.svg">
 <link rel="stylesheet" href="assets/additional-pages.css">
@@ -11,60 +11,65 @@
 <body>
   <header class="doc-header">
     <div class="brand"><span class="brand-mark">Δ</span><span>Delta Fund</span></div>
-    <nav class="doc-nav" aria-label="main navigation">
+    <nav class="doc-nav">
       <a href="index.html">Home</a>
       <a href="developer-portal.html">Developer</a>
       <a href="tokenomics.html">Tokenomics</a>
+      <a href="transparency.html">Transparency</a>
     </nav>
   </header>
 
   <main class="page-shell">
     <section class="doc-hero">
-      <div class="eyebrow">Developer resources</div>
+      <div class="eyebrow">Developer</div>
       <h1>Developer portal</h1>
-      <p>Guides for integrating with the Delta Coin (DLC) contract and reading on-chain data. This portal does not publish private keys or administrative endpoints.</p>
+      <p>This portal offers read-only integration examples and a minimal ERC-20 ABI for interacting with the verified Delta Coin contract on Polygon.</p>
     </section>
 
     <section class="doc-section">
-      <h2>Network & RPC</h2>
+      <h2>Contract details</h2>
+      <p>Contract: <code>0xB0cea145750E76Ccb24a0007206f2485dd5bf21a</code></p>
+      <p>Network: Polygon mainnet (chain ID 137)</p>
+      <p>RPC: https://polygon-rpc.com</p>
+    </section>
+
+    <section class="doc-section">
+      <h2>Minimal ERC-20 ABI (read-only)</h2>
+      <pre style="background: rgba(15,23,42,.8); padding:1rem; color:#dbeafe; border-radius:8px;">[
+  'function name() view returns (string)',
+  'function symbol() view returns (string)',
+  'function decimals() view returns (uint8)',
+  'function totalSupply() view returns (uint256)',
+  'function balanceOf(address) view returns (uint256)'
+]</pre>
+
+    </section>
+
+    <section class="doc-section">
+      <h2>Example: Read totalSupply (browser)</h2>
+      <p>Use the public Polygon RPC endpoint and ethers.js. This is a read-only example and does not require private keys.</p>
+      <pre style="white-space:pre-wrap; background: rgba(15,23,42,.8); padding:1rem; color:#dbeafe; border-radius:8px;">const provider = new ethers.providers.JsonRpcProvider('https://polygon-rpc.com');
+const contract = new ethers.Contract('0xB0cea145750E76Ccb24a0007206f2485dd5bf21a', ABI, provider);
+const total = await contract.totalSupply();
+console.log(ethers.utils.formatUnits(total, decimals));</pre>
+      <p>Note: Do not include private keys in frontend code. For server-side signed transactions, use secure environment variables and never publish private material in the repository.</p>
+    </section>
+
+    <section class="doc-section">
+      <h2>Integration guidance</h2>
       <ul>
-        <li>Network: Polygon PoS (Mainnet)</li>
-        <li>Chain ID: 137</li>
-        <li>Public RPC used for reads: https://polygon-rpc.com</li>
+        <li>Prefer server-side verification for financial flows (webhook verification, invoice mapping).</li>
+        <li>Do not perform token transfers from a centralized wallet without proper security and legal review.</li>
+        <li>Use dedicated indexer APIs (Polygonscan, TheGraph, Covalent) for holder and historical analytics.</li>
       </ul>
-    </section>
-
-    <section class="doc-section">
-      <h2>Contract</h2>
-      <p>Contract address: <code>0xB0cea145750E76Ccb24a0007206f2485dd5bf21a</code></p>
-      <p>Minimal ERC-20 interface (example):</p>
-      <pre style="background: rgba(15,23,42,.8); padding:1rem; color:#dbeafe; border-radius:8px;"><code>[
-  "function name() view returns (string)",
-  "function symbol() view returns (string)",
-  "function decimals() view returns (uint8)",
-  "function totalSupply() view returns (uint256)",
-  "function balanceOf(address) view returns (uint256)",
-  "function transfer(address,uint256) returns (bool)"
-]</code></pre>
-      <p>Note: Do not call transfer/send tokens on behalf of users without explicit user action and appropriate UI prompts. Never request private keys or seed phrases.</p>
-    </section>
-
-    <section class="doc-section">
-      <h2>Integration examples</h2>
-      <p>Use ethers.js or web3 libraries to read contract data. Example (ethers.js):</p>
-      <pre style="background: rgba(15,23,42,.8); padding:1rem; color:#dbeafe; border-radius:8px;">
-const provider = new ethers.providers.JsonRpcProvider('https://polygon-rpc.com');
-const token = new ethers.Contract(tokenAddress, ABI, provider);
-const total = await token.totalSupply();
-</pre>
-      <p>For write operations, always prompt users via their wallet provider (MetaMask, Trust Wallet). Do not implement custodial transfers in the frontend.</p>
     </section>
   </main>
 
   <footer class="doc-footer">
-    <div>© Delta Fund — Developers</div>
-    <div class="doc-nav"><a href="contact.html">Contact</a><a href="security-review.html">Security</a></div>
+    <div>© Delta Fund — Developer portal</div>
+    <div class="doc-nav"><a href="token-info.html">Token</a><a href="contact.html">Contact</a></div>
   </footer>
+  <script src="https://cdn.jsdelivr.net/npm/ethers@5.7.2/dist/ethers.umd.min.js"></script>
   <script src="assets/mobile-wallet.js"></script>
 </body>
 </html>

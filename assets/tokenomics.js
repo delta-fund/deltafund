@@ -1,36 +1,56 @@
-(function(){
+(async function(){
   const provider = new ethers.providers.JsonRpcProvider('https://polygon-rpc.com');
   const tokenAddress = '0xB0cea145750E76Ccb24a0007206f2485dd5bf21a';
-  const erc20 = new ethers.Contract(tokenAddress, [
+  const ERC20 = [
     'function name() view returns (string)',
     'function symbol() view returns (string)',
     'function decimals() view returns (uint8)',
-    'function totalSupply() view returns (uint256)'
-  ], provider);
+    'function totalSupply() view returns (uint256)',
+    'function balanceOf(address) view returns (uint256)'
+  ];
 
-  async function readToken() {
+  const nameEl = document.getElementById('t_name');
+  const symbolEl = document.getElementById('t_symbol');
+  const decEl = document.getElementById('t_decimals');
+  const supplyEl = document.getElementById('t_supply');
+  const liquidityEl = document.getElementById('t_liquidity');
+
+  async function fetchToken() {
+    nameEl.textContent = 'Loading...';
+    symbolEl.textContent = 'Loading...';
+    decEl.textContent = 'Loading...';
+    supplyEl.textContent = 'Loading...';
+
     try {
-      document.getElementById('polygonscanLink').href = 'https://polygonscan.com/address/' + tokenAddress;
-      const name = await erc20.name();
-      const symbol = await erc20.symbol();
-      const decimals = await erc20.decimals();
-      const rawSupply = await erc20.totalSupply();
+      const contract = new ethers.Contract(tokenAddress, ERC20, provider);
+      const [name, symbol, decimals, totalSupply] = await Promise.all([
+        contract.name(),
+        contract.symbol(),
+        contract.decimals(),
+        contract.totalSupply()
+      ]);
 
-      const supply = ethers.utils.formatUnits(rawSupply, decimals);
-      document.getElementById('name').innerText = name;
-      document.getElementById('symbol').innerText = symbol;
-      document.getElementById('decimals').innerText = decimals;
-      document.getElementById('totalSupply').innerText = supply + ' ' + symbol;
+      nameEl.textContent = name;
+      symbolEl.textContent = symbol;
+      decEl.textContent = String(decimals);
 
-      // Circulating supply requires off-chain verification
-      document.getElementById('circulating').innerText = 'Not available (requires off-chain indexer/data)';
+      // totalSupply is BigNumber
+      const formatted = ethers.utils.formatUnits(totalSupply, decimals);
+      supplyEl.textContent = formatted + ' ' + symbol;
+
+      liquidityEl.textContent = 'Not verified from on-chain data in this view. Use verified DEX or indexer for pool details.';
 
     } catch (err) {
-      console.error('Token read failed', err);
-      document.getElementById('totalSupply').innerText = 'Read failed';
-      document.getElementById('decimals').innerText = '—';
+      console.error('token read error', err);
+      nameEl.textContent = 'Unavailable';
+      symbolEl.textContent = 'Unavailable';
+      decEl.textContent = 'Unavailable';
+      supplyEl.textContent = 'Unavailable';
+      liquidityEl.textContent = 'Unavailable';
     }
   }
 
-  window.addEventListener('DOMContentLoaded', readToken);
+  document.getElementById('refreshBtn').addEventListener('click', (e)=>{e.preventDefault();fetchToken()});
+
+  fetchToken();
 })();

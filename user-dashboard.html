@@ -1,112 +1,60 @@
 <!doctype html>
 <html lang="en">
 <head>
-  <meta charset="utf-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1">
-  <meta name="description" content="User wallet dashboard for Delta Coin (DLC).">
-  <title>My Wallet | Delta Fund</title>
-  <link rel="icon" href="favicon.svg">
-  <link rel="stylesheet" href="assets/additional-pages.css">
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<meta name="description" content="User dashboard showing connected wallet status and DLC balance (read-only).">
+<title>User Dashboard | Delta Fund</title>
+<link rel="icon" href="favicon.svg">
+<link rel="stylesheet" href="assets/additional-pages.css">
 </head>
 <body>
   <header class="doc-header">
     <div class="brand"><span class="brand-mark">Δ</span><span>Delta Fund</span></div>
-    <nav class="doc-nav" aria-label="main navigation">
+    <nav class="doc-nav">
       <a href="index.html">Home</a>
-      <a href="whitepaper.html">Whitepaper</a>
-      <a href="token-info.html">Token</a>
       <a href="user-dashboard.html">My Wallet</a>
+      <a href="token-info.html">Token</a>
+      <a href="faq.html">FAQ</a>
     </nav>
   </header>
 
   <main class="page-shell">
     <section class="doc-hero">
-      <div class="eyebrow">Connect wallet</div>
-      <h1>Your wallet dashboard</h1>
-      <p>Connect your wallet to view your DLC balance and network status. This page reads your wallet balance only; it does not initiate transfers or approvals.</p>
+      <div class="eyebrow">My Wallet</div>
+      <h1>User wallet dashboard (read-only)</h1>
+      <p>Connect your wallet to view your address, network, and DLC token balance. This is a read-only view; no transactions are sent automatically.</p>
     </section>
 
     <section class="doc-section">
-      <div class="info-card">
-        <button id="connectBtn" class="btn primary">Connect Wallet</button>
-        <button id="disconnectBtn" class="btn secondary" style="display:none; margin-left:12px;">Disconnect</button>
-        <p id="walletStatus" style="margin-top:12px; color:#94a3b8;">Not connected</p>
+      <div class="grid-2">
+        <div class="info-card">
+          <h3>Connection</h3>
+          <p><button class="btn primary" id="connectBtn">Connect Wallet</button></p>
+          <p id="status">Not connected</p>
+        </div>
+        <div class="info-card">
+          <h3>Account</h3>
+          <p><strong>Address:</strong> <span id="acct">—</span></p>
+          <p><strong>Network:</strong> <span id="network">—</span></p>
+          <p><strong>DLC balance:</strong> <span id="dlcbal">—</span></p>
+        </div>
       </div>
+    </section>
 
-      <div class="doc-section" id="balanceSection" style="display:none;">
-        <h2>Wallet details</h2>
-        <p>Address: <code id="walletAddress"></code></p>
-        <p>Network: <span id="networkName"></span></p>
-        <p>DLC balance: <strong id="dlcBalance">—</strong></p>
-        <p><a id="viewOnPolygonscan" href="#" target="_blank" rel="noopener">View wallet on PolygonScan</a></p>
-      </div>
+    <section class="doc-section">
+      <h2>Notes</h2>
+      <p>This page uses the public Polygon RPC for contract reads. To avoid rate limits and to support higher-availability queries, host server-side aggregation or provide an approved API key for indexer services.</p>
     </section>
   </main>
 
   <footer class="doc-footer">
-    <div>© Delta Fund — My Wallet</div>
-    <div class="doc-nav"><a href="tokenomics.html">Tokenomics</a><a href="security-review.html">Security</a></div>
+    <div>© Delta Fund — User dashboard</div>
+    <div class="doc-nav"><a href="wallet-guide.html">Wallet guide</a><a href="contact.html">Contact</a></div>
   </footer>
-  <script src="https://cdnjs.cloudflare.com/ajax/libs/ethers/5.7.2/ethers.umd.min.js"></script>
-  <script>
-    const tokenAddress = '0xB0cea145750E76Ccb24a0007206f2485dd5bf21a';
-    const providerRpc = new ethers.providers.JsonRpcProvider('https://polygon-rpc.com');
-    const erc20Abi = ['function balanceOf(address) view returns (uint256)','function decimals() view returns (uint8)','function symbol() view returns (string)'];
 
-    let provider, signer;
-
-    async function connect() {
-      if (window.ethereum) {
-        try {
-          provider = new ethers.providers.Web3Provider(window.ethereum);
-          await provider.send('eth_requestAccounts', []);
-          signer = provider.getSigner();
-          const address = await signer.getAddress();
-          const network = await provider.getNetwork();
-          document.getElementById('walletAddress').innerText = address;
-          document.getElementById('walletStatus').innerText = 'Connected';
-          document.getElementById('networkName').innerText = network.name + ' (chainId ' + network.chainId + ')';
-          document.getElementById('walletStatus').style.color = '#10b981';
-          document.getElementById('connectBtn').style.display = 'none';
-          document.getElementById('disconnectBtn').style.display = 'inline-flex';
-          document.getElementById('balanceSection').style.display = 'block';
-          document.getElementById('viewOnPolygonscan').href = 'https://polygonscan.com/address/' + address;
-          await readBalance(address);
-        } catch (err) {
-          console.error(err);
-          alert('Connection failed');
-        }
-      } else {
-        alert('Wallet not detected. Use MetaMask or a Web3 browser.');
-      }
-    }
-
-    async function readBalance(address) {
-      try {
-        const readContract = new ethers.Contract(tokenAddress, erc20Abi, providerRpc);
-        const decimals = await readContract.decimals();
-        const raw = await readContract.balanceOf(address);
-        const formatted = ethers.utils.formatUnits(raw, decimals);
-        const symbol = await readContract.symbol();
-        document.getElementById('dlcBalance').innerText = formatted + ' ' + symbol;
-      } catch (err) {
-        console.error('Balance read failed', err);
-        document.getElementById('dlcBalance').innerText = 'Read failed';
-      }
-    }
-
-    function disconnect() {
-      document.getElementById('connectBtn').style.display = 'inline-flex';
-      document.getElementById('disconnectBtn').style.display = 'none';
-      document.getElementById('balanceSection').style.display = 'none';
-      document.getElementById('walletStatus').innerText = 'Not connected';
-      document.getElementById('walletStatus').style.color = '';
-    }
-
-    window.addEventListener('DOMContentLoaded', () => {
-      document.getElementById('connectBtn').addEventListener('click', connect);
-      document.getElementById('disconnectBtn').addEventListener('click', disconnect);
-    });
-  </script>
+  <script src="https://cdn.jsdelivr.net/npm/ethers@5.7.2/dist/ethers.umd.min.js"></script>
+  <script src="assets/user-dashboard.js"></script>
+  <script src="assets/mobile-wallet.js"></script>
 </body>
 </html>

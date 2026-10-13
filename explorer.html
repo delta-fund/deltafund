@@ -1,20 +1,20 @@
 <!doctype html>
 <html lang="en">
 <head>
-  <meta charset="utf-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1">
-  <meta name="description" content="Transaction and activity explorer for Delta Coin (DLC).">
-  <title>Explorer | Delta Fund</title>
-  <link rel="icon" href="favicon.svg">
-  <link rel="stylesheet" href="assets/additional-pages.css">
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<meta name="description" content="Transaction and activity explorer for Delta Coin (DLC) — query by tx hash or address and view read-only data.">
+<title>Explorer | Delta Fund</title>
+<link rel="icon" href="favicon.svg">
+<link rel="stylesheet" href="assets/additional-pages.css">
 </head>
 <body>
   <header class="doc-header">
     <div class="brand"><span class="brand-mark">Δ</span><span>Delta Fund</span></div>
-    <nav class="doc-nav" aria-label="main navigation">
+    <nav class="doc-nav">
       <a href="index.html">Home</a>
-      <a href="token-info.html">Token</a>
       <a href="explorer.html">Explorer</a>
+      <a href="token-info.html">Token</a>
       <a href="tokenomics.html">Tokenomics</a>
     </nav>
   </header>
@@ -22,35 +22,29 @@
   <main class="page-shell">
     <section class="doc-hero">
       <div class="eyebrow">Explorer</div>
-      <h1>Transaction & activity explorer (links to PolygonScan)</h1>
-      <p>Enter a transaction hash, block number, or address to open it on PolygonScan. This page does not index or store activity — it helps users view data on the official block explorer.</p>
+      <h1>Transaction & activity explorer</h1>
+      <p>Enter a transaction hash or an address to fetch read-only information via the public Polygon RPC. This explorer is limited and designed for simple lookups only.</p>
     </section>
 
     <section class="doc-section">
       <h2>Lookup</h2>
-      <form id="lookupForm" onsubmit="return doLookup(event)">
-        <input id="lookupInput" type="text" placeholder="tx hash or address or block" style="width:100%; padding:12px; background:#081126; color:#e2e8f0; border:1px solid rgba(148,163,184,.08); border-radius:8px;">
-        <div style="margin-top:12px;"><button class="btn primary" type="submit">Open on PolygonScan</button></div>
+      <form id="lookupForm">
+        <input type="text" id="lookupInput" placeholder="Enter tx hash or address" style="width:100%; padding:12px; background:#0f172a; color:#e2e8f0; border:1px solid #2b3440; border-radius:8px;">
+        <div style="margin-top:12px;"><button class="btn primary" id="lookupBtn">Lookup</button></div>
       </form>
-      <p style="margin-top:12px; color:#94a3b8; font-size:0.9rem;">Tip: paste a transaction hash or wallet address and click the button.</p>
+
+      <div id="result" class="doc-section" style="margin-top:18px; display:none;"></div>
     </section>
+
   </main>
 
   <footer class="doc-footer">
     <div>© Delta Fund — Explorer</div>
-    <div class="doc-nav"><a href="transparency.html">Transparency</a><a href="contact.html">Contact</a></div>
+    <div class="doc-nav"><a href="token-info.html">Token</a><a href="transparency.html">Transparency</a></div>
   </footer>
-  <script>
-    function doLookup(e) {
-      e.preventDefault();
-      const v = document.getElementById('lookupInput').value.trim();
-      if (!v) return false;
-      const base = 'https://polygonscan.com/';
-      const prefix = v.startsWith('0x') ? (v.length === 42 ? 'address/' : 'tx/') : (Number.isInteger(Number(v)) ? 'block/' : 'search?query=' + encodeURIComponent(v));
-      const url = base + prefix + (prefix.startsWith('search') ? '' : v);
-      window.open(url, '_blank', 'noopener');
-      return false;
-    }
-  </script>
+
+  <script src="https://cdn.jsdelivr.net/npm/ethers@5.7.2/dist/ethers.umd.min.js"></script>
+  <script src="assets/explorer.js"></script>
+  <script src="assets/mobile-wallet.js"></script>
 </body>
 </html>

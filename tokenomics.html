@@ -3,15 +3,15 @@
 <head>
   <meta charset="utf-8">
   <meta name="viewport" content="width=device-width, initial-scale=1">
-  <meta name="description" content="Tokenomics dashboard for Delta Coin (DLC) with verified on-chain reads where available.">
-  <title>Tokenomics | Delta Fund</title>
+  <meta name="description" content="Tokenomics dashboard for Delta Coin (DLC) — read-only on-chain data where available.">
+  <title>Tokenomics Dashboard | Delta Fund</title>
   <link rel="icon" href="favicon.svg">
   <link rel="stylesheet" href="assets/additional-pages.css">
 </head>
 <body>
   <header class="doc-header">
     <div class="brand"><span class="brand-mark">Δ</span><span>Delta Fund</span></div>
-    <nav class="doc-nav" aria-label="main navigation">
+    <nav class="doc-nav">
       <a href="index.html">Home</a>
       <a href="whitepaper.html">Whitepaper</a>
       <a href="token-info.html">Token</a>
@@ -22,61 +22,61 @@
 
   <main class="page-shell">
     <section class="doc-hero">
-      <div class="eyebrow">On-chain reads</div>
-      <h1>Tokenomics dashboard — Delta Coin (DLC)</h1>
-      <p>This page reads verified, public on-chain token data using the Polygon RPC. Values not directly readable from the blockchain (e.g., circulating supply derived from off-chain data or holder counts) are marked as Pending / Not available.</p>
+      <div class="eyebrow">Tokenomics</div>
+      <h1>Delta Coin (DLC) — Tokenomics Dashboard</h1>
+      <p>This page attempts to read verified on-chain token information using a public Polygon RPC provider. If some fields are unavailable, they are clearly marked.</p>
     </section>
 
     <section class="doc-section">
-      <div id="token-summary" class="doc-section">
-        <h2>Token summary</h2>
-        <div class="grid-2">
-          <div class="info-card">
-            <h3>Contract address</h3>
-            <p><code id="contractAddress">0xB0cea145750E76Ccb24a0007206f2485dd5bf21a</code></p>
-            <p><a id="polygonscanLink" href="#" target="_blank" rel="noopener">View on PolygonScan</a></p>
-          </div>
-          <div class="info-card">
-            <h3>On-chain values</h3>
-            <p><strong id="name">—</strong> (<span id="symbol">—</span>)</p>
-            <p>Total supply: <strong id="totalSupply">Loading…</strong></p>
-            <p>Decimals: <strong id="decimals">—</strong></p>
-            <p>Circulating supply: <strong id="circulating">Not available</strong></p>
-          </div>
+      <h2>On-chain token data</h2>
+      <div class="grid-2">
+        <div class="info-card">
+          <h3>Contract</h3>
+          <p id="contractAddr">0xB0cea145750E76Ccb24a0007206f2485dd5bf21a</p>
+        </div>
+        <div class="info-card">
+          <h3>Network / RPC</h3>
+          <p>Polygon mainnet — RPC: https://polygon-rpc.com (used for read-only queries)</p>
         </div>
       </div>
 
+      <div class="doc-section" style="margin-top:1rem;">
+        <h3>Token properties</h3>
+        <table>
+          <tbody>
+            <tr><th>Name</th><td id="t_name">—</td></tr>
+            <tr><th>Symbol</th><td id="t_symbol">—</td></tr>
+            <tr><th>Decimals</th><td id="t_decimals">—</td></tr>
+            <tr><th>Total supply</th><td id="t_supply">—</td></tr>
+            <tr><th>Circulating supply</th><td id="t_circulating">Unavailable — requires off-chain verification</td></tr>
+            <tr><th>Verified liquidity</th><td id="t_liquidity">Not verified</td></tr>
+          </tbody>
+        </table>
+      </div>
+
       <div class="doc-section">
-        <h2>Additional metrics</h2>
-        <div class="grid-2">
-          <div class="info-card">
-            <h3>Holder count</h3>
-            <p id="holderCount">Not available (requires indexer / third-party API)</p>
-          </div>
-          <div class="info-card">
-            <h3>Transfer activity</h3>
-            <p id="txActivity">Not available (requires indexer or block explorer API)</p>
-          </div>
+        <h3>Holder / activity data</h3>
+        <p>Holder count, token transfer activity and similar metrics require a blockchain-indexing service (Polygonscan, Covalent, TheGraph) or backend aggregation. This dashboard avoids third-party APIs by default and shows only contract-readable fields. To enable richer metrics, provide an approved read-only API key or server-side aggregation.</p>
+      </div>
+
+      <div class="doc-section">
+        <h3>Actions</h3>
+        <div class="actions">
+          <a class="btn primary" id="refreshBtn" href="#">Refresh</a>
+          <a class="btn secondary" id="viewOnScan" href="https://polygonscan.com/address/0xB0cea145750E76Ccb24a0007206f2485dd5bf21a" target="_blank" rel="noopener">View on PolygonScan</a>
         </div>
       </div>
-
-      <div class="doc-section">
-        <h2>Notes and verification</h2>
-        <ul>
-          <li>On-chain reads are performed via the public Polygon RPC: https://polygon-rpc.com</li>
-          <li>Where the contract exposes totalSupply/decimals/name/symbol we read those values directly.</li>
-          <li>Circulating supply and holder counts require off-chain indexers or exchange data and are therefore marked as Not Available unless verified via an owner-provided source.</li>
-        </ul>
-      </div>
-
     </section>
+
   </main>
 
   <footer class="doc-footer">
     <div>© Delta Fund — Tokenomics</div>
-    <div class="doc-nav"><a href="whitepaper.html">Whitepaper</a><a href="transparency.html">Transparency</a><a href="contact.html">Contact</a></div>
+    <div class="doc-nav"><a href="whitepaper.html">Whitepaper</a><a href="transparency.html">Transparency</a></div>
   </footer>
-  <script src="https://cdnjs.cloudflare.com/ajax/libs/ethers/5.7.2/ethers.umd.min.js"></script>
+
+  <script src="https://cdn.jsdelivr.net/npm/ethers@5.7.2/dist/ethers.umd.min.js"></script>
   <script src="assets/tokenomics.js"></script>
+  <script src="assets/mobile-wallet.js"></script>
 </body>
 </html>
