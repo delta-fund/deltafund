@@ -1,0 +1,70 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<meta name="description" content="Developer portal for Delta Fund with integration guidance and ABI notes.">
+<title>Developer Portal | Delta Fund</title>
+<link rel="icon" href="favicon.svg">
+<link rel="stylesheet" href="assets/additional-pages.css">
+</head>
+<body>
+  <header class="doc-header">
+    <div class="brand"><span class="brand-mark">Δ</span><span>Delta Fund</span></div>
+    <nav class="doc-nav" aria-label="main navigation">
+      <a href="index.html">Home</a>
+      <a href="developer-portal.html">Developer</a>
+      <a href="tokenomics.html">Tokenomics</a>
+    </nav>
+  </header>
+
+  <main class="page-shell">
+    <section class="doc-hero">
+      <div class="eyebrow">Developer resources</div>
+      <h1>Developer portal</h1>
+      <p>Guides for integrating with the Delta Coin (DLC) contract and reading on-chain data. This portal does not publish private keys or administrative endpoints.</p>
+    </section>
+
+    <section class="doc-section">
+      <h2>Network & RPC</h2>
+      <ul>
+        <li>Network: Polygon PoS (Mainnet)</li>
+        <li>Chain ID: 137</li>
+        <li>Public RPC used for reads: https://polygon-rpc.com</li>
+      </ul>
+    </section>
+
+    <section class="doc-section">
+      <h2>Contract</h2>
+      <p>Contract address: <code>0xB0cea145750E76Ccb24a0007206f2485dd5bf21a</code></p>
+      <p>Minimal ERC-20 interface (example):</p>
+      <pre style="background: rgba(15,23,42,.8); padding:1rem; color:#dbeafe; border-radius:8px;"><code>[
+  "function name() view returns (string)",
+  "function symbol() view returns (string)",
+  "function decimals() view returns (uint8)",
+  "function totalSupply() view returns (uint256)",
+  "function balanceOf(address) view returns (uint256)",
+  "function transfer(address,uint256) returns (bool)"
+]</code></pre>
+      <p>Note: Do not call transfer/send tokens on behalf of users without explicit user action and appropriate UI prompts. Never request private keys or seed phrases.</p>
+    </section>
+
+    <section class="doc-section">
+      <h2>Integration examples</h2>
+      <p>Use ethers.js or web3 libraries to read contract data. Example (ethers.js):</p>
+      <pre style="background: rgba(15,23,42,.8); padding:1rem; color:#dbeafe; border-radius:8px;">
+const provider = new ethers.providers.JsonRpcProvider('https://polygon-rpc.com');
+const token = new ethers.Contract(tokenAddress, ABI, provider);
+const total = await token.totalSupply();
+</pre>
+      <p>For write operations, always prompt users via their wallet provider (MetaMask, Trust Wallet). Do not implement custodial transfers in the frontend.</p>
+    </section>
+  </main>
+
+  <footer class="doc-footer">
+    <div>© Delta Fund — Developers</div>
+    <div class="doc-nav"><a href="contact.html">Contact</a><a href="security-review.html">Security</a></div>
+  </footer>
+  <script src="assets/mobile-wallet.js"></script>
+</body>
+</html>

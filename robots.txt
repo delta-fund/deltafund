@@ -1,0 +1,3 @@
+User-agent: *
+Allow: /
+Sitemap: https://delta-fund.github.io/deltafund/sitemap.xml

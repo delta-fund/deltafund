@@ -1,0 +1,255 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <meta name="description" content="Delta Fund Whitepaper draft and project overview for Delta Coin (DLC).">
+  <title>Whitepaper | Delta Fund</title>
+  <link rel="icon" href="favicon.svg">
+  <link rel="stylesheet" href="assets/additional-pages.css">
+</head>
+<body>
+  <header class="doc-header">
+    <div class="brand"><span class="brand-mark">Δ</span><span>Delta Fund</span></div>
+    <nav class="doc-nav" aria-label="main navigation">
+      <a href="index.html">Home</a>
+      <a href="whitepaper.html">Whitepaper</a>
+      <a href="roadmap.html">Roadmap</a>
+      <a href="faq.html">FAQ</a>
+      <a href="token-info.html">Token</a>
+      <a href="contact.html">Contact</a>
+    </nav>
+  </header>
+
+  <main class="page-shell">
+    <section class="doc-hero">
+      <div class="eyebrow">Draft / version 0.9</div>
+      <h1>Delta Fund and Delta Coin (DLC) Whitepaper</h1>
+      <p>
+        This document is a draft project whitepaper for the current Delta Fund ecosystem. It is intentionally
+        limited to verified information available in the repository, public project references, and documented
+        blockchain data. It does not claim audits, profits, guaranteed returns, or exchange listings that have not
+        been independently verified.
+      </p>
+      <div class="meta-row">
+        <span class="meta-pill">Publication date: 2026-10-13</span>
+        <span class="meta-pill">Version: 0.9</span>
+        <span class="meta-pill">Revision history: Draft</span>
+      </div>
+      <div class="actions">
+        <a class="btn primary" href="downloads/deltafund-whitepaper-draft.pdf">Download PDF</a>
+        <a class="btn secondary" href="index.html">Back to project</a>
+      </div>
+    </section>
+
+    <section class="doc-section">
+      <h2>Executive summary</h2>
+      <p>
+        Delta Fund is a static web portal and ecosystem page for Delta Coin (DLC) built on Polygon. The repository
+        presents a public-facing website for token awareness, wallet connection, basic buy flow guidance, and referral
+        link generation. The project currently includes a website front end, a Polygon token reference, and external
+        payment flow integration via a Plisio-form submission. No backend repository or audited smart-contract code is
+        included here; therefore, all claims are limited to what can be directly observed and documented.
+      </p>
+      <div class="grid-2">
+        <div class="info-card">
+          <h3>Verified project facts</h3>
+          <ul>
+            <li>Token symbol: DLC</li>
+            <li>Network: Polygon PoS (chain ID 137)</li>
+            <li>Contract address: 0xB0cea145750E76Ccb24a0007206f2485dd5bf21a</li>
+            <li>Documented supply: 1,000,000,000 DLC</li>
+          </ul>
+        </div>
+        <div class="info-card">
+          <h3>Known limitations</h3>
+          <ul>
+            <li>No audited smart-contract repository provided</li>
+            <li>No verified backend for reward settlement</li>
+            <li>No independent proof of exchange liquidity</li>
+            <li>Payment and reward flows must be verified before completion</li>
+          </ul>
+        </div>
+      </div>
+    </section>
+
+    <section class="doc-section">
+      <h2>Mission, vision, and objectives</h2>
+      <p>
+        The project aims to create a simple, transparent, international-facing portal for Delta Coin (DLC) on Polygon.
+        The stated objective is to provide information, wallet access guidance, community onboarding, and a clearer user
+        understanding of the token, its utility, and its project status. The project does not claim guaranteed returns,
+        audited security, or regulatory approval.
+      </p>
+      <ul>
+        <li>Provide a clean public-facing web presence for Delta Fund and Delta Coin.</li>
+        <li>Support wallet access and transaction transparency.</li>
+        <li>Document product status in a realistic and reviewable manner.</li>
+        <li>Separate verified functionality from future plans and proposals.</li>
+        <li>Maintain English-language, international-friendly communications.</li>
+      </ul>
+    </section>
+
+    <section class="doc-section">
+      <h2>Problem statement and proposed solution</h2>
+      <p>
+        Many crypto projects suffer from unclear messaging, inconsistent technical documentation, weak wallet guidance,
+        and unverified product claims. This project attempts to address that by publishing a static website, project docs,
+        and wallet guidance with a transparent status label. It also includes a conservative project narrative that avoids
+        overstating progress or trading status.
+      </p>
+      <p>
+        The solution is not a replacement for the existing token or referral logic. Instead, it adds documentation,
+        transparency, wallet support, and a launch-readiness structure while preserving original behavior and leaving any
+        incomplete mechanisms clearly marked as pending.
+      </p>
+    </section>
+
+    <section class="doc-section">
+      <h2>Existing project architecture and Polygon integration</h2>
+      <p>
+        The current repository is a static GitHub Pages site. The root file <code>index.html</code> contains the website
+        layout, on-chain wallet integration, purchase flow UI, and referral link logic. External dependencies are loaded from
+        CDN for ethers.js and Google Fonts. The project targets Polygon mainnet (chain ID 137) and references the Delta Coin
+        contract address on that network.
+      </p>
+      <div class="grid-3">
+        <div class="info-card"><h3>Frontend</h3><p>HTML/CSS/JS served via GitHub Pages.</p></div>
+        <div class="info-card"><h3>Blockchain</h3><p>Polygon PoS (mainnet) with chain ID 137.</p></div>
+        <div class="info-card"><h3>Token</h3><p>Delta Coin (DLC), contract address shown above.</p></div>
+      </div>
+    </section>
+
+    <section class="doc-section">
+      <h2>Token overview and verified tokenomics</h2>
+      <p>
+        The current project documentation states a total supply of <strong>1,000,000,000 DLC</strong>. The repository does
+        not include a verified source-code audit of the smart contract, its emission schedule, or its token management
+        functions. Therefore, this whitepaper describes the total supply as a documented value requiring independent
+        verification before being treated as final or authoritative.
+      </p>
+      <div class="table-wrap">
+        <table>
+          <thead>
+            <tr><th>Item</th><th>Value</th><th>Verification status</th></tr>
+          </thead>
+          <tbody>
+            <tr><td>Name</td><td>Delta Coin</td><td>Verified in site docs</td></tr>
+            <tr><td>Symbol</td><td>DLC</td><td>Verified in site docs</td></tr>
+            <tr><td>Network</td><td>Polygon PoS</td><td>Verified in project docs</td></tr>
+            <tr><td>Contract</td><td>0xB0cea145750E76Ccb24a0007206f2485dd5bf21a</td><td>Visible in UI and docs</td></tr>
+            <tr><td>Total supply</td><td>1,000,000,000 DLC</td><td>Documented, not contract-audited</td></tr>
+          </tbody>
+        </table>
+      </div>
+    </section>
+
+    <section class="doc-section">
+      <h2>Existing utility and proposed future utility</h2>
+      <p>
+        The current repo makes no strong claim that DLC has a verified production utility beyond being a project token used
+        in the portal, wallet display, community link generation, and public-facing documentation. Any future utility should be
+        positioned as planned or proposed, not as active, audited functionality.
+      </p>
+      <ul>
+        <li>Verified today: token display, wallet connection flow, public links, portal messaging.</li>
+        <li>Proposed future utility: broader ecosystem features, community incentives, deeper transaction flows.</li>
+        <li>Not verified: guaranteed token value, claim of profits, exchange listing, or utility-backed demand.</li>
+      </ul>
+    </section>
+
+    <section class="doc-section">
+      <h2>Referral system and staking</h2>
+      <p>
+        The repository includes a wallet-linked referral mechanism that builds a unique link from the connected address and
+        stores a ref parameter in the browser. This is a front-end implementation and does not show a complete backend
+        reward book or contract-based payout flow. The project documentation is therefore conservative: referral rewards and
+        staking functionality should be treated as unverified unless independently demonstrated.
+      </p>
+      <div class="notice">
+        Important: This whitepaper does not modify the referral logic. It simply documents what the current implementation
+        appears to do and makes clear that reward settlement and payout operation require independent verification.
+      </div>
+    </section>
+
+    <section class="doc-section">
+      <h2>Liquidity, exchange strategy, and market status</h2>
+      <p>
+        No verified Polygon liquidity pool or canonical exchange listing is proven in the source repository. The project has
+        a QuickSwap link field in the UI, but there is no repository evidence that a functioning liquidity pool has been
+        created or independently verified. For this reason, the correct disclosure remains: <strong>Liquidity pool not yet verified</strong>.
+      </p>
+      <ul>
+        <li>Exchange listing status: not verified from repo contents alone.</li>
+        <li>Liquidity status: not yet verified.</li>
+        <li>Price stability claims: not supported by this repository.</li>
+      </ul>
+    </section>
+
+    <section class="doc-section">
+      <h2>Security model and technical architecture</h2>
+      <p>
+        This project is mainly a front-end static site, so the primary exposure is customer-facing web UI logic, wallet
+        interaction, external API integration, and the accuracy of displayed contract metadata. Private keys, seed phrases,
+        and secrets are not stored in the repository code. However, wallet and transaction flows must still be reviewed for
+        spoofing, wallet detection errors, network mismatch handling, and safe behavior if web3 is unavailable.
+      </p>
+      <ul>
+        <li>Private key handling: not present in frontend code.</li>
+        <li>Wallet use: request user approval before transactions.</li>
+        <li>Security review: required before launch claims are made.</li>
+      </ul>
+    </section>
+
+    <section class="doc-section">
+      <h2>Roadmap and status</h2>
+      <div class="grid-3">
+        <div class="info-card"><h3>Phase 1</h3><p>Project website and portal launch.</p><span class="status-pill ok">Completed</span></div>
+        <div class="info-card"><h3>Phase 2</h3><p>Wallet connectivity improvements and mobile support.</p><span class="status-pill pending">In progress</span></div>
+        <div class="info-card"><h3>Phase 3</h3><p>Formal legal review and launch-readiness checks.</p><span class="status-pill pending">Pending</span></div>
+      </div>
+    </section>
+
+    <section class="doc-section">
+      <h2>Risk factors</h2>
+      <ul>
+        <li>Cryptocurrency prices and liquidity can be volatile.</li>
+        <li>Blockchain transactions may be irreversible.</li>
+        <li>Referral and reward functionality may not be fully operational or independently verified.</li>
+        <li>Tokens and smart contracts may contain undisclosed risk factors outside the repository scope.</li>
+      </ul>
+    </section>
+
+    <section class="doc-section">
+      <h2>FAQs</h2>
+      <div class="grid-2">
+        <div class="info-card"><h3>Is DLC currently audited?</h3><p>No formal audit is asserted in this repository.</p></div>
+        <div class="info-card"><h3>Is the project complete?</h3><p>No. The repository shows a front-end portal and documentation, but key launch checks remain pending.</p></div>
+        <div class="info-card"><h3>Does the site promise returns?</h3><p>No. This documentation intentionally avoids making profit guarantees.</p></div>
+        <div class="info-card"><h3>Can I rely on the UI for financial decisions?</h3><p>Only with independent verification and cautious review of the live network conditions.</p></div>
+      </div>
+    </section>
+
+    <section class="doc-section">
+      <h2>Official references</h2>
+      <ul>
+        <li>Project site: <a href="https://delta-fund.github.io/deltafund/">https://delta-fund.github.io/deltafund/</a></li>
+        <li>Token contract: 0xB0cea145750E76Ccb24a0007206f2485dd5bf21a</li>
+        <li>Polygon chain: chain ID 137</li>
+        <li>Official project repository: https://github.com/delta-fund/deltafund</li>
+      </ul>
+    </section>
+  </main>
+
+  <footer class="doc-footer">
+    <div>© Delta Fund — Draft project documentation</div>
+    <div class="doc-nav">
+      <a href="transparency.html">Transparency</a>
+      <a href="terms.html">Terms</a>
+      <a href="privacy.html">Privacy</a>
+      <a href="contact.html">Contact</a>
+    </div>
+  </footer>
+  <script src="assets/mobile-wallet.js"></script>
+</body>
+</html>

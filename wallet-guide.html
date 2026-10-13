@@ -1,0 +1,75 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <meta name="description" content="Wallet guide and mobile wallet deep-link support for Delta Fund users.">
+  <title>Wallet Connection Guide | Delta Fund</title>
+  <link rel="icon" href="favicon.svg">
+  <link rel="stylesheet" href="assets/additional-pages.css">
+</head>
+<body>
+  <header class="doc-header">
+    <div class="brand"><span class="brand-mark">Δ</span><span>Delta Fund</span></div>
+    <nav class="doc-nav" aria-label="main navigation">
+      <a href="index.html">Home</a>
+      <a href="whitepaper.html">Whitepaper</a>
+      <a href="roadmap.html">Roadmap</a>
+      <a href="faq.html">FAQ</a>
+      <a href="token-info.html">Token</a>
+      <a href="contact.html">Contact</a>
+    </nav>
+  </header>
+
+  <main class="page-shell">
+    <section class="doc-hero">
+      <div class="eyebrow">Wallet guide</div>
+      <h1>Wallet connection guide</h1>
+      <p>
+        Connecting a wallet should be simple, but users must always verify the correct network and operating conditions.
+        This page documents the minimum expectations for a safe wallet connection and a simple mobile redirect flow.
+      </p>
+    </section>
+
+    <section class="doc-section">
+      <h2>Supported wallet types</h2>
+      <div class="grid-3">
+        <div class="info-card"><h3>MetaMask</h3><p>Desktop browser extension and mobile app support.</p></div>
+        <div class="info-card"><h3>Trust Wallet</h3><p>Mobile app compatibility and deep-link approach.</p></div>
+        <div class="info-card"><h3>WalletConnect-compatible wallets</h3><p>Supports wallets that expose a standard Web3 provider.</p></div>
+      </div>
+    </section>
+
+    <section class="doc-section">
+      <h2>Required network</h2>
+      <ul>
+        <li>Network: Polygon mainnet</li>
+        <li>Chain ID: 137</li>
+        <li>RPC endpoint: https://polygon-rpc.com</li>
+      </ul>
+      <div class="warning">
+        If the wallet is not on Polygon, approval should be requested before switching or sending funds. Never approve or sign a transaction without understanding the transaction request.
+      </div>
+    </section>
+
+    <section class="doc-section">
+      <h2>Mobile redirect behavior</h2>
+      <p>
+        A mobile user who does not have a browser wallet installed should be redirected to a wallet app or app store page,
+        rather than silently failing. The repository now contains a mobile-aware helper that detects mobile browsers and
+        opens a wallet deep-link attempt when a provider is missing.
+      </p>
+      <pre style="white-space: pre-wrap; background: rgba(15,23,42,.8); border-radius:12px; padding:1rem; color:#dbeafe;">const config = {
+  metamask: { ios: 'metamask://', android: 'https://metamask.app.link/dapp/' + location.host + location.pathname },
+  trust: { ios: 'https://link.trustwallet.com/open_url?coin_id=966&url=' + encodeURIComponent(window.location.href) }
+};</pre>
+    </section>
+  </main>
+
+  <footer class="doc-footer">
+    <div>© Delta Fund — Wallet guide</div>
+    <div class="doc-nav"><a href="whitepaper.html">Whitepaper</a><a href="faq.html">FAQ</a><a href="terms.html">Terms</a></div>
+  </footer>
+  <script src="assets/mobile-wallet.js"></script>
+</body>
+</html>

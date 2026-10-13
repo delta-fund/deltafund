@@ -1,0 +1,68 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <meta name="description" content="Delta Fund transparency dashboard covering contract status, website status, liquidity, and draft disclosures.">
+  <title>Transparency | Delta Fund</title>
+  <link rel="icon" href="favicon.svg">
+  <link rel="stylesheet" href="assets/additional-pages.css">
+</head>
+<body>
+  <header class="doc-header">
+    <div class="brand"><span class="brand-mark">Δ</span><span>Delta Fund</span></div>
+    <nav class="doc-nav" aria-label="main navigation">
+      <a href="index.html">Home</a>
+      <a href="whitepaper.html">Whitepaper</a>
+      <a href="transparency.html">Transparency</a>
+      <a href="roadmap.html">Roadmap</a>
+      <a href="faq.html">FAQ</a>
+      <a href="contact.html">Contact</a>
+    </nav>
+  </header>
+
+  <main class="page-shell">
+    <section class="doc-hero">
+      <div class="eyebrow">Transparency dashboard</div>
+      <h1>Project status and verified information</h1>
+      <p>
+        This dashboard is intentionally conservative. It lists only project information with direct evidence in the repository or
+        public project references. It does not display fabricated balances, user counts, prices, or live trading metrics.
+      </p>
+    </section>
+
+    <section class="doc-section">
+      <div class="grid-4">
+        <div class="info-card"><h3>Token contract</h3><p>0xB0cea145750E76Ccb24a0007206f2485dd5bf21a</p><span class="status-pill ok">Verified in UI</span></div>
+        <div class="info-card"><h3>Network</h3><p>Polygon mainnet</p><span class="status-pill ok">Verified</span></div>
+        <div class="info-card"><h3>Supply</h3><p>1,000,000,000 DLC</p><span class="status-pill pending">Documented</span></div>
+        <div class="info-card"><h3>Liquidity pool</h3><p>Liquidity pool not yet verified</p><span class="status-pill blocked">Not verified</span></div>
+      </div>
+    </section>
+
+    <section class="doc-section">
+      <h2>Documentation status</h2>
+      <div class="table-wrap">
+        <table>
+          <thead>
+            <tr><th>Item</th><th>Status</th><th>Notes</th></tr>
+          </thead>
+          <tbody>
+            <tr><td>Website</td><td><span class="status-pill ok">Live</span></td><td>Provided as a static GitHub Pages site.</td></tr>
+            <tr><td>Whitepaper</td><td><span class="status-pill pending">Draft</span></td><td>Prepared as a draft documentation file and PDF.</td></tr>
+            <tr><td>Terms / privacy / disclosures</td><td><span class="status-pill pending">Draft</span></td><td>Created as informational legal docs pending legal review.</td></tr>
+            <tr><td>Wallet support</td><td><span class="status-pill pending">In progress</span></td><td>Mobile redirect capability added as an isolated helper.</td></tr>
+            <tr><td>Security review</td><td><span class="status-pill pending">Pending</span></td><td>No audit claim is made.</td></tr>
+          </tbody>
+        </table>
+      </div>
+    </section>
+  </main>
+
+  <footer class="doc-footer">
+    <div>© Delta Fund — Transparency</div>
+    <div class="doc-nav"><a href="whitepaper.html">Whitepaper</a><a href="security-review.html">Security</a><a href="contact.html">Contact</a></div>
+  </footer>
+  <script src="assets/mobile-wallet.js"></script>
+</body>
+</html>
