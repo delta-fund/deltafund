@@ -1,0 +1,64 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <meta name="description" content="Security review and issue reporting information for Delta Fund.">
+  <title>Security Review | Delta Fund</title>
+  <link rel="icon" href="favicon.svg">
+  <link rel="stylesheet" href="assets/additional-pages.css">
+</head>
+<body>
+  <header class="doc-header">
+    <div class="brand"><span class="brand-mark">Δ</span><span>Delta Fund</span></div>
+    <nav class="doc-nav" aria-label="main navigation">
+      <a href="index.html">Home</a>
+      <a href="whitepaper.html">Whitepaper</a>
+      <a href="transparency.html">Transparency</a>
+      <a href="security-review.html">Security</a>
+      <a href="contact.html">Contact</a>
+    </nav>
+  </header>
+
+  <main class="page-shell">
+    <section class="doc-hero">
+      <div class="eyebrow">Security review</div>
+      <h1>Security review status</h1>
+      <p>This report reflects source-based review only and does not claim a formal audit or security certification.</p>
+    </section>
+
+    <section class="doc-section">
+      <h2>Risk summary</h2>
+      <div class="table-wrap">
+        <table>
+          <thead>
+            <tr><th>Priority</th><th>Issue</th><th>Assessment</th><th>Recommendation</th></tr>
+          </thead>
+          <tbody>
+            <tr><td>Critical</td><td>Off-chain payment flow and token delivery not described in repository</td><td>Pending verification</td><td>Verify and document the real delivery mechanism before suggesting operational purchases.</td></tr>
+            <tr><td>High</td><td>Wallet-to-transaction flow relies on browser providers; network mismatch risk remains</td><td>Medium risk</td><td>Require live network checks and explicit approvals before transactions.</td></tr>
+            <tr><td>Medium</td><td>Referral and reward logic appears client-side only</td><td>Not fully verified</td><td>Document whether rewards are off-chain or contract-based.</td></tr>
+            <tr><td>Low</td><td>External payment/backend dependencies may fail or change</td><td>Operational risk</td><td>Display fallback messaging and disclose dependency.</td></tr>
+          </tbody>
+        </table>
+      </div>
+    </section>
+
+    <section class="doc-section">
+      <h2>Recommended actions</h2>
+      <ul>
+        <li>Review the live wallet flow against the actual contract and payment routing.</li>
+        <li>Confirm whether DLC delivery is contract-initiated or off-chain.</li>
+        <li>Document the external webhook endpoint and its security posture.</li>
+        <li>Separate the public website from any financial or admin backend.</li>
+      </ul>
+    </section>
+  </main>
+
+  <footer class="doc-footer">
+    <div>© Delta Fund — Security</div>
+    <div class="doc-nav"><a href="transparency.html">Transparency</a><a href="contact.html">Contact</a></div>
+  </footer>
+  <script src="assets/mobile-wallet.js"></script>
+</body>
+</html>
