@@ -1,0 +1,54 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <meta name="description" content="Launch-readiness checklist for Delta Fund international launch.">
+  <title>Launch Readiness | Delta Fund</title>
+  <link rel="icon" href="favicon.svg">
+  <link rel="stylesheet" href="assets/additional-pages.css">
+</head>
+<body>
+  <header class="doc-header">
+    <div class="brand"><span class="brand-mark">Δ</span><span>Delta Fund</span></div>
+    <nav class="doc-nav" aria-label="main navigation">
+      <a href="index.html">Home</a>
+      <a href="whitepaper.html">Whitepaper</a>
+      <a href="launch-checklist.html">Launch</a>
+      <a href="contact.html">Contact</a>
+    </nav>
+  </header>
+
+  <main class="page-shell">
+    <section class="doc-hero">
+      <div class="eyebrow">Launch readiness</div>
+      <h1>International launch checklist</h1>
+      <p>The checklist below marks each item as Completed, Pending, Blocked, or Not Applicable based on repository evidence and the public site. Items requiring owner action are clearly noted.</p>
+    </section>
+
+    <section class="doc-section">
+      <h2>Checklist</h2>
+      <table>
+        <thead><tr><th>Item</th><th>Status</th><th>Notes</th></tr></thead>
+        <tbody>
+          <tr><td>Domain & HTTPS</td><td><span class="status-pill ok">Completed</span></td><td>GitHub Pages / Vercel hosts available. Confirmed site URLs provided.</td></tr>
+          <tr><td>Whitepaper</td><td><span class="status-pill pending">Pending</span></td><td>Draft whitepaper added; legal review required.</td></tr>
+          <tr><td>Wallet integrations (desktop)</td><td><span class="status-pill ok">Completed</span></td><td>MetaMask detection and connect flow present in the site.</td></tr>
+          <tr><td>Wallet integrations (mobile deep links)</td><td><span class="status-pill pending">Pending</span></td><td>Mobile deep-link helper added; live testing on device required.</td></tr>
+          <tr><td>Token & contract verification</td><td><span class="status-pill ok">Completed</span></td><td>Contract address is published in UI and docs.</td></tr>
+          <tr><td>Liquidity verification</td><td><span class="status-pill blocked">Blocked</span></td><td>No verified liquidity pool detected in repository.</td></tr>
+          <tr><td>Security audit</td><td><span class="status-pill pending">Pending</span></td><td>Source-based review added; formal audit not present.</td></tr>
+          <tr><td>Legal review</td><td><span class="status-pill pending">Pending</span></td><td>Terms and privacy drafted but require legal approval.</td></tr>
+          <tr><td>Support readiness</td><td><span class="status-pill pending">Pending</span></td><td>Support email defined: deltafund.inc@proton.me — confirm monitoring and SLA.</td></tr>
+        </tbody>
+      </table>
+    </section>
+  </main>
+
+  <footer class="doc-footer">
+    <div>© Delta Fund — Launch checklist</div>
+    <div class="doc-nav"><a href="roadmap.html">Roadmap</a><a href="security-review.html">Security</a></div>
+  </footer>
+  <script src="assets/mobile-wallet.js"></script>
+</body>
+</html>
